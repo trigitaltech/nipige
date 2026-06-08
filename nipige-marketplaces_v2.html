@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nipige Marketplace Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1410;
+  --paper:#f4efe6;
+  --card:#fffdf8;
+  --accent:#d4521f;
+  --accent-soft:#f7e4d8;
+  --green:#2f6b4f;
+  --green-soft:#e2efe6;
+  --line:#e3d9c9;
+  --muted:#8a7e6c;
+  --gold:#b8893a;
+  --nav-w:288px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Public Sans',sans-serif;
+  background:
+    radial-gradient(circle at 12% 4%, rgba(212,82,31,.05), transparent 38%),
+    radial-gradient(circle at 92% 96%, rgba(47,107,79,.05), transparent 38%),
+    var(--paper);
+  color:var(--ink);line-height:1.55;
+}
+.shell{display:flex;min-height:100vh}
+
+/* Left nav */
+.nav{
+  width:var(--nav-w);flex-shrink:0;
+  position:sticky;top:0;height:100vh;
+  border-right:1px solid var(--line);
+  background:rgba(255,253,248,.7);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;
+}
+.nav-head{padding:26px 22px 16px;border-bottom:1px solid var(--line)}
+.brand{font-family:'Fraunces',serif;font-size:23px;font-weight:600;letter-spacing:-.01em}
+.brand em{font-style:italic;color:var(--accent)}
+.brand-sub{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.04em}
+.nav-search{position:relative;margin:14px 22px 4px}
+.nav-search input{
+  width:100%;padding:10px 12px 10px 34px;font-size:13px;font-family:inherit;
+  border:1.5px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);
+  transition:border-color .2s,box-shadow .2s;
+}
+.nav-search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.nav-search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.nav-count{font-size:11px;color:var(--muted);padding:8px 22px 6px;font-weight:600;letter-spacing:.03em}
+.nav-list{flex:1;overflow-y:auto;padding:4px 12px 24px}
+.nav-list::-webkit-scrollbar{width:8px}
+.nav-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.nav-item{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 11px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:#4a4234;transition:background .15s,color .15s;
+  border:none;background:none;width:100%;text-align:left;font-family:inherit;
+}
+.nav-item:hover{background:var(--accent-soft);color:var(--accent)}
+.nav-item.active{background:var(--ink);color:#fff}
+.nav-item .ni-num{font-family:'Fraunces',serif;font-size:11px;font-weight:600;color:var(--muted);min-width:22px;flex-shrink:0}
+.nav-item.active .ni-num{color:rgba(255,255,255,.6)}
+.nav-item .ni-txt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Main */
+.main{flex:1;min-width:0;padding:34px 40px 80px;max-width:1000px}
+.intro{margin-bottom:30px}
+.intro .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+.intro h1{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,46px);font-weight:600;line-height:1.05;letter-spacing:-.02em}
+.intro h1 em{font-style:italic;color:var(--accent)}
+.intro p{max-width:620px;margin-top:12px;color:var(--muted);font-size:15px}
+.region-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;transition:all .16s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* Row cards */
+.rows{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:22px 26px;position:relative;overflow:hidden;
+  transition:box-shadow .22s,border-color .22s;scroll-margin-top:20px;
+}
+.card::before{content:'';position:absolute;left:0;top:0;height:100%;width:4px;background:linear-gradient(180deg,var(--accent),var(--gold));transform:scaleY(0);transform-origin:top;transition:transform .3s}
+.card:hover{box-shadow:0 14px 36px -20px rgba(26,20,16,.3);border-color:#d8cbb6}
+.card:hover::before{transform:scaleY(1)}
+.card.flash{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.row-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:4px}
+.idx-badge{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:5px 10px;flex-shrink:0;min-width:44px;text-align:center}
+.row-titles{flex:1;min-width:0}
+.cat{font-family:'Fraunces',serif;font-size:21px;font-weight:600;letter-spacing:-.01em;line-height:1.15}
+.purpose{font-size:12.5px;color:var(--accent);font-weight:600;margin-top:2px}
+.cover{flex-shrink:0;font-size:12px;font-weight:700;color:var(--green);background:var(--green-soft);padding:5px 10px;border-radius:8px;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.cover span{font-size:8px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.row-body{display:grid;grid-template-columns:1fr 300px;gap:26px;margin-top:14px}
+@media(max-width:780px){.row-body{grid-template-columns:1fr}}
+.field-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px}
+.field{margin-bottom:13px}
+.field-text{font-size:14px;color:#3a3228}
+.examples{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.ex{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.ex.afme{background:var(--green-soft);color:var(--green)}
+.ex .region{color:var(--muted);font-weight:500}
+.row-foot{margin-top:6px;padding-top:12px;border-top:1px dashed var(--line)}
+.ref-link{font-size:12px;color:var(--muted);text-decoration:none;font-weight:600;transition:color .18s}
+.ref-link:hover{color:var(--accent)}
+.no-results{text-align:center;padding:80px 20px;color:var(--muted)}
+.no-results h3{font-family:'Fraunces',serif;font-size:24px;color:var(--ink);margin-bottom:8px}
+
+.menu-btn{display:none}
+@media(max-width:880px){
+  .nav{position:fixed;left:0;top:0;z-index:100;transform:translateX(-100%);transition:transform .25s}
+  .nav.open{transform:none}
+  .main{padding:24px 18px 70px}
+  .menu-btn{display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;padding:9px 14px;border:1.5px solid var(--line);background:var(--card);border-radius:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ink)}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(26,20,16,.4);z-index:90}
+  .overlay.show{display:block}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="nav" id="nav">
+    <div class="nav-head">
+      <div class="brand">What can a <em>Nipige</em> be?</div>
+      <div class="brand-sub">100 marketplace & aggregator models</div>
+    </div>
+    <div class="nav-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="navSearch" type="text" placeholder="Search use cases…" autocomplete="off">
+    </div>
+    <div class="nav-count" id="navCount"></div>
+    <nav class="nav-list" id="navList"></nav>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+    <button class="menu-btn" id="menuBtn">☰ Use cases</button>
+    <div class="intro">
+      <div class="eyebrow">Marketplace Use-Case Library</div>
+      <h1>What can a <em>Nipige</em> be?</h1>
+      <p>A searchable catalog of 100 marketplace and aggregator models — each with a brief, a market use case, and live examples spanning India, the West, Asia, <strong>Africa and the Middle East</strong>. Pick a use case from the left, or filter by region.</p>
+      <div class="region-bar" id="regionBar"></div>
+    </div>
+    <div class="rows" id="rows"></div>
+  </main>
+</div>
+
+<script>
+const DATA = [
+{i:1,cat:"Agritech — Grocery Delivery",purpose:"On-demand grocery delivery",cover:100,url:"https://www.bigbasket.com/",
+ brief:"A digital storefront that lets households order fresh produce, staples and packaged goods for fast home delivery. The Nipige aggregates local kirana stores, dark stores and farm suppliers into a single inventory, manages real-time stock and slot booking, and runs a last-mile rider fleet. It removes the trip to the market, guarantees freshness windows, and gives small grocers an online channel they could never build alone.",
+ use:"Convert neighbourhood grocery demand into a delivery-first subscription habit with recurring baskets.",
+ ex:[["BigBasket","India"],["Instacart","USA"],["Jumia Food","Africa"],["Talabat Mart","Middle East"]]},
+{i:2,cat:"Agritech — Grocery Aggregation",purpose:"Multi-store grocery aggregator",cover:100,url:"https://www.instacart.com/",
+ brief:"A marketplace that connects shoppers with multiple supermarkets and personal shoppers rather than holding its own stock. The Nipige surfaces catalogues from many retailers, lets users compare and mix carts across stores, and dispatches a shopper to pick and deliver. Asset-light by design, it monetises through retailer commissions, delivery fees and ads, while giving regional chains instant e-commerce reach.",
+ use:"Let existing grocery chains go online overnight without building their own logistics or app.",
+ ex:[["Instacart","USA"],["BigBasket","India"],["Tendo","Africa"],["Nana","Middle East"]]},
+{i:3,cat:"Taxi Aggregation",purpose:"Cab & ride aggregator",cover:70,url:"https://www.olacabs.com/",
+ brief:"A ride-hailing platform matching passengers with nearby drivers in real time. The Nipige handles GPS dispatch, dynamic pricing, in-app payments, driver ratings and route optimisation. It onboards independent car owners as supply and commuters as demand, turning idle vehicles into earning assets. Trust, ETA accuracy and surge transparency are the core value drivers.",
+ use:"Aggregate fragmented local taxi supply into one reliable, cashless on-demand mobility layer.",
+ ex:[["Ola","India"],["Uber","USA"],["Bolt","Africa"],["Careem","Middle East"]]},
+{i:4,cat:"Pharmacy",purpose:"Pharmacy delivery & aggregator",cover:90,url:"https://www.1mg.com/",
+ brief:"An online chemist that lets patients upload prescriptions, order medicines and OTC products, and get them delivered. The Nipige aggregates licensed pharmacies, verifies prescriptions, flags drug interactions, and offers refill reminders and tele-consults. It improves medicine access in underserved areas and adds diagnostics and e-prescriptions as upsells.",
+ use:"Digitise chronic-medication refills into a recurring, reminder-driven delivery subscription.",
+ ex:[["1mg","India"],["Capsule","USA"],["mPharma","Africa"],["Whites Pharmacy","Middle East"]]},
+{i:6,cat:"Healthcare — Doctor Booking",purpose:"Doctor discovery & appointments",cover:70,url:"https://www.practo.com/",
+ brief:"A platform to find verified doctors by specialty, location and rating, then book in-clinic or video appointments. The Nipige manages provider calendars, patient records, tele-consult video, and post-visit prescriptions. It reduces wait times, fills empty doctor slots, and builds a longitudinal health profile that powers follow-up care.",
+ use:"Fill doctors' idle appointment slots while giving patients instant, reviewed access to care.",
+ ex:[["Practo","India"],["Zocdoc","USA"],["Helium Health","Africa"],["Vezeeta","Middle East"]]},
+{i:7,cat:"Furniture & Interiors",purpose:"Home decor & furniture",cover:80,url:"https://www.livspace.com/",
+ brief:"A managed marketplace connecting homeowners with interior designers, modular-furniture factories and installers. The Nipige offers 3D design tools, transparent quotes, project tracking and warranty-backed execution end to end. It de-risks a notoriously opaque category by standardising pricing and timelines while giving local craftsmen scaled demand.",
+ use:"Turn a one-off renovation into a guided, milestone-based project with bundled product sales.",
+ ex:[["Livspace","India"],["Havenly","USA"],["Tovgad","Africa"],["The One","Middle East"]]},
+{i:8,cat:"Edutech — Online Education",purpose:"Online learning platform",cover:60,url:"https://unacademy.com/",
+ brief:"A platform delivering live and recorded classes from expert educators to learners at scale. The Nipige hosts video, quizzes, doubt-clearing and subscription plans, matching top teachers with students far beyond their physical reach. Test-prep, skilling and exam cohorts are common verticals, monetised via subscriptions and premium batches.",
+ use:"Scale a star educator's reach from one classroom to a national paying subscriber base.",
+ ex:[["Unacademy","India"],["Coursera","USA"],["uLesson","Africa"],["Noon Academy","Middle East"]]},
+{i:9,cat:"Automobiles — Auto Service",purpose:"Car service & repair",cover:70,url:"https://gomechanic.in/",
+ brief:"A platform for booking car servicing, repairs and spares through a network of vetted garages. The Nipige offers transparent fixed pricing, doorstep pickup, live job tracking and genuine-parts assurance. It tackles the trust deficit of local mechanics and gives independent workshops a steady, branded order flow.",
+ use:"Standardise opaque garage pricing into transparent, bookable service packages with pickup.",
+ ex:[["GoMechanic","India"],["YourMechanic","USA"],["Garage Mobility","Africa"],["Carzaty","Middle East"]]},
+{i:10,cat:"Finance — Fintech & Payments",purpose:"Wallet, transfers & bill pay",cover:70,url:"https://paytm.com/",
+ brief:"A super-app for digital payments — wallet top-ups, UPI/QR transfers, bill payments, recharges and merchant checkout. The Nipige links bank accounts and cards, settles merchant payments, and cross-sells lending, insurance and investments off the transaction graph. Ubiquity and trust make payments the wedge into broader financial services.",
+ use:"Use everyday bill-pay and QR payments as the hook to cross-sell credit and insurance.",
+ ex:[["Paytm","India"],["Venmo","USA"],["M-Pesa","Africa"],["STC Pay","Middle East"]]},
+{i:11,cat:"Insurance",purpose:"Insurance aggregator",cover:80,url:"https://www.policybazaar.com/",
+ brief:"A comparison marketplace where users compare quotes across insurers for health, motor, life and travel cover, then buy online. The Nipige normalises complex policy terms, runs eligibility and claims support, and earns commissions from insurers. It cuts through agent opacity with side-by-side transparency and digital onboarding.",
+ use:"Replace pushy agents with transparent quote comparison and assisted, commission-funded sales.",
+ ex:[["PolicyBazaar","India"],["Policygenius","USA"],["Naked Insurance","Africa"],["Yallacompare","Middle East"]]},
+{i:12,cat:"Opticals",purpose:"Eyewear online",cover:80,url:"https://www.lenskart.com/",
+ brief:"An omnichannel eyewear store offering prescription glasses, sunglasses and lenses with home try-on and AR fitting. The Nipige manages prescriptions, virtual try-on, optician tie-ups and home eye-tests, blending online convenience with offline trust. Vertical integration of frames and lenses drives margins.",
+ use:"Pair virtual try-on with at-home eye tests to convert offline spectacle buyers online.",
+ ex:[["Lenskart","India"],["Warby Parker","USA"],["Eyewa","Middle East"],["OptiBuy","Africa"]]},
+{i:13,cat:"Beauty",purpose:"Cosmetics & beauty store",cover:80,url:"https://www.nykaa.com/",
+ brief:"A curated marketplace for makeup, skincare, fragrance and grooming across global and local brands. The Nipige offers authentic-product assurance, expert content, reviews and personalised recommendations, plus its own private labels. Content-to-commerce — tutorials feeding into purchases — is the engine.",
+ use:"Drive beauty discovery through expert content that funnels directly into authenticated purchases.",
+ ex:[["Nykaa","India"],["Sephora","France"],["Boutiqaat","Middle East"],["BeautyClick","Africa"]]},
+{i:14,cat:"Re-Commerce",purpose:"Used electronics resale",cover:90,url:"https://www.cashify.in/",
+ brief:"A platform to sell, buy or trade-in used smartphones and gadgets at an instant, fair price. The Nipige runs diagnostic-based valuation, doorstep pickup, data-wipe assurance and refurb resale. It unlocks value from idle devices and feeds a circular, affordable second-hand market.",
+ use:"Convert idle old phones into instant cash and refurbished resale supply via doorstep pickup.",
+ ex:[["Cashify","India"],["Back Market","France"],["Badili","Africa"],["Cartlow","Middle East"]]},
+{i:15,cat:"Logistics",purpose:"Door-to-door delivery",cover:85,url:"https://www.delhivery.com/",
+ brief:"A tech-led logistics network handling first-mile, sorting, line-haul and last-mile delivery for e-commerce and businesses. The Nipige provides shipment booking, real-time tracking, COD reconciliation and returns management across a wide pin-code footprint. Scale, reliability and reach are the moats.",
+ use:"Give e-commerce sellers nationwide fulfilment with tracking, COD and returns built in.",
+ ex:[["Delhivery","India"],["FedEx","USA"],["Sendy","Africa"],["Aramex","Middle East"]]},
+{i:16,cat:"Matrimonial",purpose:"Matchmaking services",cover:85,url:"https://www.shaadi.com/",
+ brief:"A profile-based matchmaking platform where individuals and families find marriage partners by community, profession and preferences. The Nipige offers verified profiles, privacy controls, AI match suggestions and premium concierge plans. Trust, verification and cultural fit are central to conversion.",
+ use:"Monetise serious marriage intent through verified profiles and premium matchmaking tiers.",
+ ex:[["Shaadi.com","India"],["eHarmony","USA"],["Muzz","Middle East"],["Cupid Africa","Africa"]]},
+{i:17,cat:"Buy & Sell",purpose:"Peer-to-peer classifieds",cover:90,url:"https://www.olx.in/",
+ brief:"A classifieds marketplace for individuals to buy and sell used goods — cars, electronics, furniture and more — locally. The Nipige provides listings, chat, location matching and optional escrow or delivery. Liquidity of supply and demand in each city is the flywheel; monetisation comes from featured listings and ads.",
+ use:"Build hyper-local liquidity so any used item finds a nearby buyer within days.",
+ ex:[["OLX","India"],["Craigslist","USA"],["Jiji","Africa"],["Dubizzle","Middle East"]]},
+{i:18,cat:"Food & Restaurant",purpose:"Food delivery aggregator",cover:100,url:"https://www.swiggy.com/",
+ brief:"An aggregator connecting diners with restaurants for delivery and pickup, plus its own rider fleet. The Nipige manages menus, real-time order routing, live tracking, payments and ratings. It expands restaurant reach beyond walk-ins while owning the hungry-now demand moment; cloud kitchens and groceries extend the model.",
+ use:"Capture the hungry-now moment and turn restaurant reach into per-order commission revenue.",
+ ex:[["Swiggy","India"],["DoorDash","USA"],["Jumia Food","Africa"],["Talabat","Middle East"]]},
+{i:19,cat:"Real Estate",purpose:"Property buy/sell/rent",cover:85,url:"https://www.99acres.com/",
+ brief:"A property marketplace listing flats, plots, houses and commercial space for sale and rent. The Nipige offers verified listings, virtual tours, locality insights, and connects buyers with sellers, brokers and developers. Lead generation for developers and brokers funds the platform.",
+ use:"Aggregate scattered property listings into a trusted search with developer lead-gen monetisation.",
+ ex:[["99acres","India"],["Zillow","USA"],["BuyRentKenya","Africa"],["Property Finder","Middle East"]]},
+{i:20,cat:"Travel Booking",purpose:"Travel ticket booking",cover:85,url:"https://www.makemytrip.com/",
+ brief:"An online travel agency for booking flights, trains, buses, hotels and holiday packages in one place. The Nipige integrates supplier inventory, dynamic pricing, loyalty and trip management, bundling cross-sells like insurance and cabs. Convenience of one-stop itinerary planning drives basket size.",
+ use:"Bundle flights, stays and add-ons into one itinerary to maximise per-traveller revenue.",
+ ex:[["MakeMyTrip","India"],["Expedia","USA"],["Travelstart","Africa"],["Wego","Middle East"]]},
+{i:21,cat:"Driver Aggregators",purpose:"On-demand drivers",cover:90,url:"https://www.driveu.in/",
+ brief:"A platform that supplies trained drivers on demand to people who own a car but need someone to drive it. The Nipige vets and trains drivers, handles booking, GPS tracking and ratings for hourly, outstation or valet needs. It serves owners who can't or won't drive — a niche distinct from cab-hailing.",
+ use:"Serve car owners needing a driver, not a cab — hourly, outstation or designated-driver gigs.",
+ ex:[["DriveU","India"],["Dryver","USA"],["DriverGo","Africa"],["Saify Driver","Middle East"]]},
+{i:22,cat:"B2B Commerce",purpose:"Manufacturer-to-distributor trade",cover:90,url:"https://udaan.com/",
+ brief:"A B2B marketplace connecting manufacturers, wholesalers and retailers for bulk trade with credit and logistics. The Nipige digitises distribution — discovery, ordering, financing and delivery — for kiranas and SMEs. It compresses long supply chains and offers working-capital credit as a key hook.",
+ use:"Digitise wholesale distribution and bundle embedded credit to lock in repeat SME buyers.",
+ ex:[["Udaan","India"],["Faire","USA"],["TradeDepot","Africa"],["Retailo","Middle East"]]},
+{i:23,cat:"E-commerce",purpose:"General online marketplace",cover:100,url:"https://www.flipkart.com/",
+ brief:"A horizontal marketplace selling everything from electronics to fashion via third-party sellers and fulfilment. The Nipige runs catalogue, search, payments, logistics, returns and seller services at massive scale. Selection, price and delivery speed compound into a self-reinforcing flywheel.",
+ use:"Aggregate vast seller selection with fast fulfilment to own the default shopping destination.",
+ ex:[["Flipkart","India"],["Amazon","USA"],["Jumia","Africa"],["Noon","Middle East"]]},
+{i:24,cat:"Fintech — Utilities",purpose:"Utility bill payment",cover:90,url:"https://pay.google.com/",
+ brief:"A payments app focused on UPI transfers, recharges and utility bill payments with rewards. The Nipige links bank accounts for instant peer and merchant payments, automates recurring bills, and gamifies with cashback. Frictionless, free P2P payments build the daily-use habit that monetises via merchant and lending tie-ins.",
+ use:"Use free, fast payments and bill autopay to build a daily-habit financial gateway.",
+ ex:[["Google Pay","India"],["Cash App","USA"],["Flutterwave","Africa"],["Fawry","Middle East"]]},
+{i:25,cat:"Community Service",purpose:"Gated-community management",cover:75,url:"https://www.nobrokerhood.com/",
+ brief:"A society-management app for gated communities handling visitor entry, security, maintenance bills, amenities and resident communication. The Nipige digitises gate security with OTP-based visitor passes, automates dues collection, and creates a resident marketplace. It becomes the operating system for apartment living.",
+ use:"Become the operating layer for apartment societies — security, billing and resident commerce.",
+ ex:[["NoBrokerHood","India"],["BuildingLink","USA"],["Estate Intel","Africa"],["Tasaheel","Middle East"]]},
+{i:26,cat:"Pet Store",purpose:"Pet wellness & supplies",cover:90,url:"https://petfolk.com/",
+ brief:"A platform combining pet supplies, vet care, grooming and wellness in one place. The Nipige sells food and accessories, books vet consults and home grooming, and tracks pet health records. Recurring food subscriptions plus a services layer build sticky, high-frequency relationships with pet parents.",
+ use:"Combine recurring pet-food subscriptions with on-demand vet and grooming services.",
+ ex:[["Petfolk","USA"],["Supertails","India"],["Pet Lovers","Africa"],["PetShop.ae","Middle East"]]},
+{i:27,cat:"Fitness & Wellness",purpose:"Fitness & wellness app",cover:80,url:"https://www.cult.fit/",
+ brief:"A wellness platform offering gym and class memberships, at-home workouts, mental-wellness and healthy food. The Nipige aggregates fitness centres into one pass, streams live and on-demand classes, and bundles nutrition. A single membership unlocking many formats and locations is the core appeal.",
+ use:"Sell one membership that unlocks gyms, classes and home workouts across a city.",
+ ex:[["cult.fit","India"],["ClassPass","USA"],["FitAfrik","Africa"],["GymNation","Middle East"]]},
+{i:28,cat:"Home Services",purpose:"On-demand home professionals",cover:75,url:"https://www.urbancompany.com/",
+ brief:"A marketplace for booking vetted professionals — plumbers, electricians, cleaners, beauticians — for home visits. The Nipige standardises pricing, trains and rates pros, handles scheduling and payment, and warranties the work. It formalises an informal sector and gives gig workers branded, recurring demand.",
+ use:"Formalise informal home-repair labour into vetted, fixed-price, warrantied bookings.",
+ ex:[["Urban Company","India"],["Thumbtack","USA"],["SweepSouth","Africa"],["Justmop","Middle East"]]},
+{i:29,cat:"Laundry",purpose:"Laundry & dry-cleaning",cover:90,url:"https://www.thelaundrybasket.in/",
+ brief:"An on-demand laundry and dry-cleaning service with pickup and delivery. The Nipige aggregates local laundries and presses, schedules pickups, tracks orders, and offers subscriptions for regular washes. It removes the chore burden for busy urban households and gives small launderers digital order flow.",
+ use:"Turn weekly laundry into a scheduled pickup-and-delivery subscription for urban households.",
+ ex:[["Laundry Basket","India"],["Rinse","USA"],["Yoza","Africa"],["Washmen","Middle East"]]},
+{i:30,cat:"Education & E-learning",purpose:"Learning management system",cover:65,url:"https://byjus.com/",
+ brief:"A structured learning platform delivering curriculum-aligned courses, adaptive practice and progress tracking. The Nipige hosts content, gamified learning, assessments and parent dashboards across grades and exams. Personalised learning paths and measurable outcomes justify subscription pricing.",
+ use:"Deliver adaptive, curriculum-mapped learning with parent-visible progress to justify subscriptions.",
+ ex:[["BYJU'S","India"],["Khan Academy","USA"],["uLesson","Africa"],["Abwaab","Middle East"]]},
+{i:31,cat:"Event Ticketing",purpose:"Event ticket booking",cover:85,url:"https://in.bookmyshow.com/",
+ brief:"A ticketing platform for movies, concerts, sports and live events with seat selection and digital tickets. The Nipige integrates venue inventory, dynamic seat maps, payments and event discovery, plus its own live-event production. Owning the booking moment for entertainment drives ancillary F&B and merch sales.",
+ use:"Own the entertainment booking moment and upsell seats, F&B and experiences.",
+ ex:[["BookMyShow","India"],["Ticketmaster","USA"],["Quicket","Africa"],["Platinumlist","Middle East"]]},
+{i:32,cat:"Home Improvement & Interior Design",purpose:"End-to-end interior platform",cover:60,url:"https://www.homelane.com/",
+ brief:"A platform offering end-to-end home interior design and renovation, bringing homeowners, designers and suppliers together. The Nipige provides design visualisation, transparent quotes, factory-made modular units and managed on-site execution with warranties. It turns a chaotic, multi-vendor process into a single accountable project.",
+ use:"Replace fragmented contractor chaos with one accountable, warranty-backed renovation journey.",
+ ex:[["HomeLane","India"],["Block Renovation","USA"],["Kandua","Africa"],["Homani","Middle East"]]},
+{i:33,cat:"Car & Bike Rentals",purpose:"Self-drive vehicle hire",cover:70,url:"https://www.zoomcar.com/",
+ brief:"A self-drive car and bike rental marketplace, including peer-to-peer vehicle sharing. The Nipige handles bookings, KYC, digital unlocking, insurance and damage management, letting owners monetise idle vehicles and renters access cars without ownership. Flexible hourly-to-weekly rentals fit varied trips.",
+ use:"Let people rent cars by the hour and owners earn from idle vehicles — no ownership needed.",
+ ex:[["Zoomcar","India"],["Turo","USA"],["Planet42","Africa"],["Udrive","Middle East"]]},
+{i:34,cat:"Elderly Care",purpose:"Senior care services",cover:60,url:"https://care24.co.in/",
+ brief:"A platform delivering at-home care for seniors — nursing, attendants, physiotherapy and medical equipment. The Nipige vets caregivers, matches them to needs, schedules visits and lets families monitor care remotely. It addresses ageing populations and dispersed families with trustworthy, trackable home care.",
+ use:"Give distant families trusted, trackable at-home care for ageing parents.",
+ ex:[["Care24","India"],["Care.com","USA"],["Wellahealth","Africa"],["Manzil","Middle East"]]},
+{i:35,cat:"Photography",purpose:"Photography services",cover:80,url:"https://www.weddingbazaar.com/",
+ brief:"A marketplace connecting clients with photographers and videographers for weddings, events and shoots. The Nipige showcases portfolios, manages quotes, bookings, contracts and payments, and curates by style and budget. It brings discovery and trust to a referral-driven, freelance-heavy category.",
+ use:"Match event clients with vetted photographers via portfolio-led discovery and managed booking.",
+ ex:[["WeddingBazaar","India"],["The Knot","USA"],["Shutterhub Africa","Africa"],["Snapper","Middle East"]]},
+{i:36,cat:"Document & Parcel Delivery",purpose:"Drop-shipping & shipping",cover:80,url:"https://app.shiprocket.in/",
+ brief:"A shipping aggregator that lets online sellers compare couriers, book shipments and manage fulfilment from one dashboard. The Nipige integrates multiple carriers, automates label generation, NDR and returns, and offers the best rate per pin code. It is the logistics back-office for D2C and SME sellers.",
+ use:"Give small sellers multi-courier shipping, tracking and returns from one dashboard.",
+ ex:[["Shiprocket","India"],["ShipStation","USA"],["Sendy","Africa"],["Shipa","Middle East"]]},
+{i:37,cat:"Personal Finance Management",purpose:"Expense & budget tracking",cover:70,url:"https://walnutfinance.com/",
+ brief:"An app that helps individuals track spending, set budgets and gain insights into their financial habits. The Nipige reads transactions, auto-categorises expenses, sends bill reminders and visualises money flow. Behavioural insight and nudges build the habit, with lending or investing cross-sell as monetisation.",
+ use:"Auto-track spending and nudge better habits, then cross-sell credit and investments.",
+ ex:[["Walnut","India"],["Mint","USA"],["PiggyVest","Africa"],["Lune","Middle East"]]},
+{i:38,cat:"Dating",purpose:"Dating & social matching",cover:60,url:"https://tinder.com/",
+ brief:"A location-based dating app matching people by preferences via swipe-style discovery and chat. The Nipige handles profile verification, matching algorithms, safety features and premium visibility tiers. Network density in each city and trust/safety are the make-or-break factors; freemium-to-premium drives revenue.",
+ use:"Build dense local dating networks monetised through premium visibility and boosts.",
+ ex:[["Tinder","USA"],["Bumble","USA"],["Hawaya","Middle East"],["Vows","Africa"]]},
+{i:39,cat:"Housing",purpose:"Brokerage-free rentals",cover:65,url:"https://www.nobroker.in/",
+ brief:"A peer-to-peer rental platform connecting tenants and owners directly, eliminating brokerage. The Nipige verifies listings, enables direct chat, and layers paid services like rental agreements, packers, painting and home loans. Removing the broker fee is the sharp wedge; ancillary services fund the model.",
+ use:"Cut out brokers with direct owner-tenant matching, monetised via rental add-on services.",
+ ex:[["NoBroker","India"],["Zillow Rentals","USA"],["Lamudi","Africa"],["Bayut","Middle East"]]},
+{i:40,cat:"Legal Services",purpose:"Online legal services",cover:65,url:"https://www.legalzoom.com/",
+ brief:"A platform providing affordable legal documents, incorporation, trademarks and lawyer consultations online. The Nipige templatises common legal needs, matches users with attorneys, and manages filings and compliance. It democratises legal help for individuals and small businesses priced out of traditional firms.",
+ use:"Make routine legal work (incorporation, contracts) self-serve and affordable for SMEs.",
+ ex:[["LegalZoom","USA"],["Vakilsearch","India"],["Lawpadi","Africa"],["Legal Inz","Middle East"]]},
+{i:41,cat:"Gig Economy",purpose:"Gig worker marketplace",cover:65,url:"https://www.gig.com/",
+ brief:"A marketplace matching businesses with on-demand gig workers for short tasks and shifts. The Nipige handles worker profiles, skill matching, shift scheduling, payments and ratings. It gives flexible workers income access and gives businesses elastic, just-in-time staffing without permanent payroll.",
+ use:"Match flexible workers to short shifts so businesses staff up on demand without payroll.",
+ ex:[["Gig","Global"],["Wonolo","USA"],["Lynk","Africa"],["Ogram","Middle East"]]},
+{i:42,cat:"Job Portal",purpose:"Jobs & recruitment marketplace",cover:65,url:"https://www.naukri.com/",
+ brief:"A jobs marketplace aggregating openings, candidate profiles, recruiters and placement agents. The Nipige powers search, resume databases, applicant tracking and employer branding, monetising via recruiter subscriptions and featured postings. Two-sided liquidity of candidates and jobs is the moat.",
+ use:"Aggregate candidates and openings, selling recruiter access and premium employer branding.",
+ ex:[["Naukri","India"],["Indeed","USA"],["Jobberman","Africa"],["Bayt","Middle East"]]},
+{i:43,cat:"Social Media",purpose:"Social gathering & events",cover:65,url:"https://www.meetup.com/",
+ brief:"A platform for organising and discovering local interest-based groups, events and meetups. The Nipige lets organisers create communities, schedule events, sell tickets and grow membership around shared interests. It monetises through organiser subscriptions and event fees while building real-world social capital.",
+ use:"Turn shared interests into recurring real-world meetups with organiser subscriptions.",
+ ex:[["Meetup","USA"],["Eventbrite","USA"],["Eventbrite Africa","Africa"],["Hayfa","Middle East"]]},
+{i:44,cat:"Restaurant Booking",purpose:"Table reservations",cover:75,url:"https://www.dineout.co.in/",
+ brief:"A dining marketplace for discovering restaurants, booking tables and getting deals. The Nipige manages real-time table inventory, reservations, waitlists, prepaid offers and loyalty. It fills empty covers for restaurants and rewards diners with discounts, owning the going-out decision.",
+ use:"Fill empty restaurant tables with reservations and prepaid deals that reward diners.",
+ ex:[["Dineout","India"],["OpenTable","USA"],["EatOut","Africa"],["Reserveout","Middle East"]]},
+{i:45,cat:"D2C — Farm to Home",purpose:"Direct fresh meat & produce",cover:75,url:"https://www.licious.in/",
+ brief:"A direct-to-consumer brand delivering fresh meat, seafood and produce with cold-chain control. The Nipige owns sourcing, processing, quality assurance and last-mile cold delivery for a hygiene-sensitive category. Brand trust around freshness and safety commands premium pricing over wet markets.",
+ use:"Win trust in fresh meat with owned cold-chain and brand-grade hygiene, at a premium.",
+ ex:[["Licious","India"],["ButcherBox","USA"],["Eden Life","Africa"],["Meatonomics","Middle East"]]},
+{i:46,cat:"Advertise Listing",purpose:"Local business directory",cover:80,url:"https://www.justdial.com/",
+ brief:"A local search and business-listing directory where users find services and businesses pay to be discovered. The Nipige aggregates listings, reviews, contact and booking, monetising via paid listings, leads and ads. It is the yellow-pages-meets-search layer for local commerce.",
+ use:"Aggregate local-business discovery and sell visibility plus qualified leads to merchants.",
+ ex:[["JustDial","India"],["Yelp","USA"],["VConnect","Africa"],["Connect.ae","Middle East"]]},
+{i:47,cat:"Trip Reviews",purpose:"Places review & rating",cover:70,url:"https://www.tripadvisor.in/",
+ brief:"A travel reviews platform aggregating user ratings for hotels, restaurants and attractions, with booking links. The Nipige crowdsources reviews and photos, ranks places, and earns referral commissions from booking partners. Trustworthy crowd-reviews drive travel decisions and downstream bookings.",
+ use:"Aggregate trusted traveller reviews and convert them into booking referral commissions.",
+ ex:[["TripAdvisor","USA"],["Yelp","USA"],["SafariNow","Africa"],["Zomato UAE","Middle East"]]},
+{i:48,cat:"Employer Credibility",purpose:"Employer & employee ratings",cover:70,url:"https://www.glassdoor.co.in/",
+ brief:"A platform where employees anonymously review employers, share salaries and rate interviews. The Nipige crowdsources workplace transparency, combines it with job listings, and monetises via employer branding and recruiting tools. Honest insider signal is the unique asset attracting jobseekers.",
+ use:"Crowdsource salary and workplace transparency to attract jobseekers and sell employer branding.",
+ ex:[["Glassdoor","USA"],["Comparably","USA"],["Jobberman Insights","Africa"],["Bayt Reviews","Middle East"]]},
+{i:49,cat:"Room Aggregator",purpose:"Hotel & stay bookings",cover:70,url:"https://www.oyorooms.com/",
+ brief:"A branded-budget-stay aggregator standardising independent hotels and homes under one quality promise. The Nipige onboards small hotels, enforces standards, manages pricing and distribution, and books guests through one trusted brand. It converts fragmented, unbranded supply into predictable, bookable inventory.",
+ use:"Standardise scattered budget hotels under one trusted brand with predictable quality.",
+ ex:[["OYO","India"],["Airbnb","USA"],["Hotels.ng","Africa"],["Tamara Stays","Middle East"]]},
+{i:50,cat:"Content Aggregator",purpose:"Content management & curation",cover:65,url:"https://yourstory.com/",
+ brief:"A content platform aggregating and publishing stories, news and resources around a theme or community. The Nipige curates, hosts and distributes long-form content, building an engaged audience monetised via ads, events, sponsorships and premium membership. Authority and audience trust are the assets.",
+ use:"Build a themed media audience and monetise through ads, events and sponsored content.",
+ ex:[["YourStory","India"],["Medium","USA"],["TechCabal","Africa"],["Wamda","Middle East"]]},
+{i:51,cat:"Language Learning",purpose:"Language learning app",cover:65,url:"https://www.duolingo.com/",
+ brief:"A gamified app teaching languages through bite-sized, adaptive lessons. The Nipige uses streaks, levels and spaced repetition to keep learners engaged daily, with freemium-to-premium upgrades. Habit-forming gamification and free access drive scale, while subscriptions and ads monetise.",
+ use:"Hook daily learners with gamified streaks, then upsell ad-free premium tiers.",
+ ex:[["Duolingo","USA"],["Babbel","Germany"],["Kasahorow","Africa"],["Kaleela","Middle East"]]},
+{i:52,cat:"City Waste Management",purpose:"Waste management app",cover:80,url:"https://myecobin.in/",
+ brief:"A platform digitising household and commercial waste collection, segregation and recycling pickups. The Nipige schedules collection, tracks bins, rewards segregation, and connects waste to recyclers and scrap dealers. It brings accountability and circularity to urban sanitation while creating recycling supply.",
+ use:"Digitise scheduled waste pickup and reward segregation to feed a recycling supply chain.",
+ ex:[["EcoBins","India"],["Rubicon","USA"],["Wecyclers","Africa"],["RECAPP","Middle East"]]},
+{i:53,cat:"OTT & Streaming",purpose:"OTT streaming app",cover:65,url:"https://www.netflix.com/in/",
+ brief:"A subscription video-on-demand platform streaming films, series and original content. The Nipige licenses and produces content, personalises recommendations, and streams across devices on a subscription model. A deep, exclusive content library plus great recommendations reduce churn.",
+ use:"Retain subscribers with exclusive original content and personalised recommendations.",
+ ex:[["Netflix","USA"],["ZEE5","India"],["Showmax","Africa"],["Shahid","Middle East"]]},
+{i:54,cat:"BI & Analytics",purpose:"Data visualization",cover:75,url:"https://www.qlik.com/",
+ brief:"A business-intelligence platform turning raw data into interactive dashboards and insights. The Nipige connects data sources, builds visualisations, enables self-serve analytics and embeds reporting for decision-makers. Ease of insight discovery and data governance drive enterprise adoption.",
+ use:"Let non-technical teams self-serve dashboards and insights from connected data sources.",
+ ex:[["Qlik","USA"],["Tableau","USA"],["Asoriba Analytics","Africa"],["Lucidya","Middle East"]]},
+{i:55,cat:"Subscription Billing — Cable TV",purpose:"Cable TV bill payment",cover:100,url:"https://cablepay.co.in/",
+ brief:"A billing-and-payment platform for cable TV and local ISP operators to collect subscriptions digitally. The Nipige manages subscriber records, recurring billing, payment collection and reminders for fragmented local operators. It modernises cash-heavy cable collections into trackable digital recurring revenue.",
+ use:"Digitise cash-based cable subscription collection into automated recurring billing.",
+ ex:[["CablePay","India"],["Spectrum Pay","USA"],["DStv Pay","Africa"],["OSN Pay","Middle East"]]},
+{i:56,cat:"Clothing",purpose:"Online fashion marketplace",cover:95,url:"https://www.bewakoof.com/",
+ brief:"An online apparel brand and marketplace selling trend-led, affordable fashion. The Nipige owns design, manufacturing, catalogue, sizing and fast fulfilment, riding social-media-driven trends. A distinctive brand voice and quick fashion cycles build a loyal young customer base.",
+ use:"Ride social trends with fast, affordable in-house fashion and a sharp brand voice.",
+ ex:[["Bewakoof","India"],["SHEIN","China"],["Zando","Africa"],["Namshi","Middle East"]]},
+{i:57,cat:"Jewellery",purpose:"Jewellery marketplace",cover:90,url:"https://www.bluestone.com/",
+ brief:"An online jewellery brand selling certified gold and diamond pieces with try-at-home and lifetime exchange. The Nipige handles design, certification, customisation, secure delivery and buy-back, building trust in a high-value, trust-sensitive category. Certification and easy returns de-risk online jewellery buying.",
+ use:"Build trust in high-value online jewellery via certification, try-at-home and buy-back.",
+ ex:[["BlueStone","India"],["Blue Nile","USA"],["Adoraa","Africa"],["Damas Online","Middle East"]]},
+{i:58,cat:"Babycare",purpose:"Baby & kids products",cover:95,url:"https://www.firstcry.com/",
+ brief:"An online store for newborn, baby and kids products spanning diapers, toys, clothing and gear. The Nipige offers wide selection, parenting content, loyalty and offline stores, becoming the go-to for parents through every growth stage. Recurring consumables and stage-based needs build long lifetime value.",
+ use:"Capture parents early and grow with the child through recurring, stage-based purchases.",
+ ex:[["FirstCry","India"],["buybuy BABY","USA"],["MumsVillage","Africa"],["Mumzworld","Middle East"]]},
+{i:59,cat:"Deals & Coupon Aggregator",purpose:"Discounts & coupons",cover:75,url:"https://www.coupondunia.in/",
+ brief:"A platform aggregating discount codes, cashback and deals across e-commerce sites. The Nipige curates verified offers, tracks cashback, and earns affiliate commissions when users shop through it. It sits at the bottom of the purchase funnel, monetising intent to save.",
+ use:"Capture bargain-hunters at checkout and earn affiliate revenue on cashback-driven purchases.",
+ ex:[["CouponDunia","India"],["Honey","USA"],["DealDey","Africa"],["Almowafir","Middle East"]]},
+{i:60,cat:"Personalised Gifts",purpose:"Custom gifting",cover:85,url:"https://www.yoursurprise.com/",
+ brief:"A marketplace for personalised gifts — printed, engraved or custom-made for occasions. The Nipige offers design tools, print-on-demand fulfilment and occasion reminders, turning emotion into custom products. Personalisation commands premium margins and repeat gifting through life events.",
+ use:"Turn occasions into premium custom gifts with design tools and occasion reminders.",
+ ex:[["YourSurprise","Netherlands"],["Zoomin","India"],["Gifted.ng","Africa"],["Joi Gifts","Middle East"]]},
+{i:61,cat:"Audio Streaming",purpose:"Podcasts & audiobooks",cover:65,url:"https://kukufm.com/",
+ brief:"An audio platform streaming podcasts, audiobooks and audio shows, often in regional languages. The Nipige produces and licenses audio content, personalises discovery, and monetises via subscriptions and ads. Regional-language original audio unlocks underserved listeners on the go.",
+ use:"Serve underserved regional-language listeners with original audio on a subscription model.",
+ ex:[["Kuku FM","India"],["Spotify","Sweden"],["AfricaPodfest","Africa"],["Anghami","Middle East"]]},
+{i:62,cat:"Fintech Lending",purpose:"Online credit provider",cover:75,url:"https://www.gopaysense.com/",
+ brief:"A digital lender offering instant personal loans and credit lines via app-based underwriting. The Nipige automates KYC, alternative-data credit scoring, disbursal and collections. Speed and access for the underbanked are the wedge; risk-managed underwriting is the discipline that sustains it.",
+ use:"Offer instant, app-based credit to the underbanked using alternative-data underwriting.",
+ ex:[["PaySense","India"],["Affirm","USA"],["Branch","Africa"],["Tabby","Middle East"]]},
+{i:63,cat:"Wedding Planning",purpose:"Wedding planning & vendors",cover:90,url:"https://www.theknot.com/",
+ brief:"A platform helping couples plan weddings — vendors, budgets, guest lists, registries and payments. The Nipige aggregates venues, photographers, caterers and decorators, with planning tools and reviews. It organises a high-spend, once-in-a-lifetime project while monetising vendor leads.",
+ use:"Organise high-spend wedding planning end to end and monetise vendor lead generation.",
+ ex:[["The Knot","USA"],["WedMeGood","India"],["FindMyVenue","Africa"],["MarryBaby","Middle East"]]},
+{i:64,cat:"Co-working Space Management",purpose:"Co-working management",cover:85,url:"https://nexdax.com/",
+ brief:"A platform to manage and book co-working and flexible office space — desks, meeting rooms and memberships. The Nipige handles space inventory, bookings, access control, billing and community. It maximises utilisation for operators and gives members frictionless flexible workspace access.",
+ use:"Maximise desk utilisation with bookings, access control and member billing in one app.",
+ ex:[["Nexdax","India"],["WeWork","USA"],["Workstyle Africa","Africa"],["Astrolabs","Middle East"]]},
+{i:65,cat:"Crowdfunding",purpose:"Project crowdfunding",cover:80,url:"https://www.kickstarter.com/",
+ brief:"A crowdfunding marketplace where creators raise money from backers to bring projects to life. The Nipige hosts campaigns, processes pledges, manages rewards tiers, and takes a platform fee on funds raised. Community validation plus all-or-nothing funding aligns creators and backers.",
+ use:"Let creators validate and fund projects via backer pledges, earning a platform fee.",
+ ex:[["Kickstarter","USA"],["Ketto","India"],["Thundafund","Africa"],["Eureeca","Middle East"]]},
+{i:66,cat:"Lead-gen Marketplace",purpose:"Local search & deals",cover:90,url:"https://www.justdial.com/",
+ brief:"A local search engine offering deals, online shopping and bookings for flights, hotels, movies, buses and cabs. The Nipige aggregates services and generates qualified leads for local businesses, monetising via paid listings and lead fees. Breadth of local intent makes it a one-stop discovery hub.",
+ use:"Aggregate broad local intent and sell qualified leads across many service verticals.",
+ ex:[["JustDial","India"],["Yelp","USA"],["VConnect","Africa"],["Connect.ae","Middle East"]]},
+{i:67,cat:"Used-Car Dealer Aggregation",purpose:"Second-hand cars",cover:80,url:"https://www.cars24.com/",
+ brief:"A platform to buy and sell used cars with inspection, fair pricing, paperwork and instant payment. The Nipige runs multi-point inspections, transparent valuation, financing and warranty, removing the trust gap in used-car deals. Owning inventory and certification builds buyer confidence.",
+ use:"Remove the trust gap in used cars with inspection, instant payment and certified resale.",
+ ex:[["Cars24","India"],["Carvana","USA"],["Cars45","Africa"],["CarSwitch","Middle East"]]},
+{i:68,cat:"Carpooling & Ride-sharing",purpose:"Carpooling aggregation",cover:85,url:"https://www.lyft.com/",
+ brief:"A ride-sharing and carpooling platform matching drivers with passengers heading the same way. The Nipige handles route matching, cost-splitting, payments and ratings, cutting commute costs and congestion. Density of overlapping routes determines match quality and savings.",
+ use:"Match commuters on overlapping routes to split costs and cut congestion.",
+ ex:[["Lyft","USA"],["BlaBlaCar","France"],["SWVL","Africa"],["Careem Carpool","Middle East"]]},
+{i:69,cat:"Rewards",purpose:"Loyalty & rewards",cover:90,url:"https://www.easyrewardz.com/",
+ brief:"A loyalty platform letting brands run points, tiers and rewards programmes across channels. The Nipige manages customer data, points accrual/redemption, personalised offers and analytics. It deepens retention for merchants and gives shoppers consolidated, redeemable value across brands.",
+ use:"Power cross-brand loyalty programmes that lift retention and consolidate shopper rewards.",
+ ex:[["Easyrewardz","India"],["Smile.io","Canada"],["Zumi","Africa"],["Maly","Middle East"]]},
+{i:70,cat:"Books",purpose:"Online book sales & discovery",cover:95,url:"https://www.bookbub.com/",
+ brief:"A book discovery and deals platform recommending titles and discounted e-books to readers. The Nipige personalises recommendations, surfaces limited-time deals, and drives sales for authors and retailers via affiliate links. Personalised discovery solves the find-your-next-read problem at scale.",
+ use:"Drive book discovery with personalised deal alerts that convert readers into buyers.",
+ ex:[["BookBub","USA"],["Goodreads","USA"],["OkadaBooks","Africa"],["Jamalon","Middle East"]]},
+{i:71,cat:"Transport / Porter Service",purpose:"Intercity & local logistics",cover:90,url:"https://porter.in/",
+ brief:"An on-demand logistics platform for moving goods — mini-trucks, two-wheelers and porters for local and intercity hauls. The Nipige matches loads with vehicles, prices transparently, tracks live, and serves SMEs and individuals. It formalises the unorganised goods-transport market with instant booking.",
+ use:"Match goods with the right vehicle on demand, formalising local cargo transport.",
+ ex:[["Porter","India"],["Lalamove","Hong Kong"],["Lori Systems","Africa"],["Trukker","Middle East"]]},
+{i:72,cat:"Recipe Aggregation",purpose:"Recipes & meal discovery",cover:90,url:"https://www.yummly.com/",
+ brief:"A recipe discovery platform recommending dishes via search and personalised suggestions, with smart shopping lists. The Nipige aggregates recipes, matches them to dietary preferences and pantry, and links to grocery purchase. Personalised meal planning bridges inspiration and ingredient commerce.",
+ use:"Turn recipe inspiration into grocery baskets with personalised meal planning.",
+ ex:[["Yummly","USA"],["Allrecipes","USA"],["Sisi Jemimah","Africa"],["Matbakhi","Middle East"]]},
+{i:73,cat:"Arts & Crafts Marketplace",purpose:"Skills & craft learning",cover:95,url:"https://www.craftsy.com/",
+ brief:"A marketplace for craft and hobby learning — classes, patterns, kits and supplies. The Nipige hosts video courses, sells materials, and builds a maker community around skills like quilting, baking and painting. Content plus commerce (learn then buy supplies) compounds engagement.",
+ use:"Teach a craft, then sell the kits and supplies learners need to practise it.",
+ ex:[["Craftsy","USA"],["Skillshare","USA"],["Afrikrea","Africa"],["Hunarmand","Middle East"]]},
+{i:74,cat:"Content Aggregation — News",purpose:"News & content aggregator",cover:85,url:"https://dailyhunt.in/",
+ brief:"A news aggregator delivering content from many publishers and languages in a personalised feed. The Nipige licenses publisher content, personalises by interest and language, and monetises through ads. Multilingual breadth and a smart feed make it the default news habit for diverse audiences.",
+ use:"Aggregate multilingual news into one personalised feed monetised by advertising.",
+ ex:[["Dailyhunt","India"],["Google News","USA"],["Opera News","Africa"],["Almatsah","Middle East"]]},
+{i:75,cat:"Crypto Aggregation",purpose:"Crypto exchange",cover:75,url:"https://accounts.binance.com/",
+ brief:"A cryptocurrency exchange where users buy, sell, trade and store digital assets. The Nipige provides order matching, wallets, security, fiat on-ramps and a range of trading products. Liquidity, security and regulatory compliance determine trust and trading volume.",
+ use:"Provide secure, liquid crypto trading with fiat on-ramps for retail and pro traders.",
+ ex:[["Binance","Global"],["Coinbase","USA"],["Yellow Card","Africa"],["Rain","Middle East"]]},
+{i:76,cat:"Barber Aggregation",purpose:"Salon & barber booking",cover:95,url:"https://barberfinder.co.uk/",
+ brief:"An app-based booking platform for salons and barbershops with real-time availability. The Nipige lets shops list services, manage calendars and accept bookings, while clients discover and book nearby slots. It fills empty chairs for small shops and removes call-and-wait friction for clients.",
+ use:"Fill empty barber chairs with real-time online booking and discovery.",
+ ex:[["BarberFinder","UK"],["Booksy","USA"],["Salon Africa","Africa"],["Fresha MENA","Middle East"]]},
+{i:77,cat:"Virtual Creative Workshops",purpose:"Creative idea workshops",cover:80,url:"https://creativityworkshop.com/",
+ brief:"A platform hosting virtual creative workshops to generate and explore ideas for individuals and teams. The Nipige provides facilitated sessions, collaboration tools and exercises that unlock creativity. It serves corporates and creatives seeking structured ideation, monetised via session and cohort fees.",
+ use:"Run facilitated virtual ideation workshops for teams, sold as cohorts or corporate sessions.",
+ ex:[["Creativity Workshop","USA"],["Domestika","Spain"],["GeniusU Africa","Africa"],["Tasattuf","Middle East"]]},
+{i:78,cat:"Freelancers",purpose:"Freelance services marketplace",cover:85,url:"https://www.upwork.com/",
+ brief:"A marketplace connecting businesses with freelancers for IT, design, writing and professional work. The Nipige handles profiles, proposals, escrow payments, milestones and ratings, building trust between remote parties. Global talent access plus secure payment make remote hiring frictionless.",
+ use:"Connect businesses with vetted global freelancers via escrow-secured project hiring.",
+ ex:[["Upwork","USA"],["Fiverr","Israel"],["Asuqu","Africa"],["Ureed","Middle East"]]},
+{i:79,cat:"Digital Advertising Services",purpose:"Digital marketing & AI consulting",cover:90,url:"https://adtechhub.com/",
+ brief:"A platform offering digital marketing and AI-driven advertising technology services to businesses. The Nipige bundles campaign management, ad-tech tooling, analytics and consulting, helping brands optimise spend. Outcome-driven performance and AI optimisation differentiate it from generic agencies.",
+ use:"Help brands optimise ad spend with AI-driven ad-tech tooling and performance consulting.",
+ ex:[["AdTechHub","Global"],["The Trade Desk","USA"],["Terragon","Africa"],["Digital Falcon","Middle East"]]},
+{i:80,cat:"Political App",purpose:"Party & voter connect",cover:85,url:"https://itdpblog.com/",
+ brief:"A platform connecting a political party with voters — sharing agenda, gathering feedback and mobilising volunteers. The Nipige distributes content, runs surveys, coordinates ground teams and tracks sentiment. It digitises grassroots political engagement and two-way voter communication.",
+ use:"Digitise grassroots political engagement — agenda broadcast, feedback and volunteer mobilisation.",
+ ex:[["Mana TDP","India"],["NationBuilder","USA"],["Shine Your Eye","Africa"],["Meedan","Middle East"]]},
+{i:81,cat:"Courier Aggregator",purpose:"Drop-shipping & courier",cover:85,url:"https://www.shiprocket.in/",
+ brief:"A courier aggregation platform enabling sellers to ship via multiple carriers with the best rates and tracking. The Nipige automates carrier selection, label printing, tracking, NDR and returns for online businesses. It is the shipping backbone that lets small sellers scale fulfilment cheaply.",
+ use:"Let online sellers ship through many couriers at best rates from one panel.",
+ ex:[["Shiprocket","India"],["Shippo","USA"],["Sendbox","Africa"],["Shipa","Middle East"]]},
+{i:82,cat:"Musical Instruments",purpose:"Instruments & pro audio",cover:95,url:"https://www.bajaao.com/",
+ brief:"An online retailer for musical instruments, pro-audio and studio equipment with expert guidance. The Nipige offers wide selection, gear advice, EMI, and community for musicians, blending specialist commerce with content. Expertise and authentic gear build trust with serious buyers.",
+ use:"Serve musicians with curated gear, expert advice and financing in a specialist store.",
+ ex:[["Bajaao","India"],["Sweetwater","USA"],["MusicWorld Africa","Africa"],["Melody House","Middle East"]]},
+{i:83,cat:"Astrology",purpose:"Astrology & gems",cover:null,url:"https://www.astrosage.com/",
+ brief:"An astrology platform offering horoscopes, kundli matching, consultations and remedial products like gems. The Nipige generates personalised charts, connects users with astrologers for paid consults, and sells related products. Belief-driven engagement and recurring consultations fuel monetisation.",
+ use:"Monetise belief-driven engagement via paid astrologer consults and remedial product sales.",
+ ex:[["AstroSage","India"],["Co–Star","USA"],["Africa Astrology","Africa"],["Abraj","Middle East"]]},
+{i:84,cat:"Temples / Prasad",purpose:"Faith offerings delivery",cover:95,url:"https://onlineprasad.com/",
+ brief:"A spiritual platform delivering blessed prasad and offerings from places of worship to devotees' homes. The Nipige coordinates with temples, handles rituals-on-behalf, packaging and delivery, serving devotees who can't visit in person. Faith and authenticity of the tie-up are the trust drivers.",
+ use:"Bring temple prasad and rituals to distant devotees who can't visit in person.",
+ ex:[["OnlinePrasad","India"],["Sri Mandir","India"],["Faith Africa","Africa"],["Zakat Online","Middle East"]]},
+{i:85,cat:"Church Services",purpose:"Faith community services",cover:95,url:"https://cnisynod.org/",
+ brief:"A platform digitising faith-community services — service schedules, donations, events, sermons and member communication. The Nipige connects congregations, enables online giving and livestreams, and coordinates community programmes. It modernises faith-community administration and engagement.",
+ use:"Digitise congregation engagement — schedules, online giving, livestreams and member outreach.",
+ ex:[["CNI Synod","India"],["Pushpay","USA"],["Asoriba","Africa"],["Muslim Pro","Middle East"]]},
+{i:86,cat:"Club Membership",purpose:"Club membership management",cover:95,url:"https://www.bangaloreclub.com/",
+ brief:"A platform managing private club memberships — bookings, billing, events, dining and facility access. The Nipige digitises member records, reservations, dues and communications for heritage and social clubs. It modernises operations and member experience for legacy institutions.",
+ use:"Modernise legacy club operations — member billing, facility bookings and event management.",
+ ex:[["Bangalore Club","India"],["ClubExpress","USA"],["Lagos Country Club","Africa"],["Capital Club","Middle East"]]},
+{i:87,cat:"NFT Aggregator",purpose:"NFT minting & marketplace",cover:90,url:"https://superrare.com/",
+ brief:"A marketplace where artists mint digital creations as NFTs and collectors buy, sell and trade them. The Nipige handles minting, wallet integration, auctions, royalties and provenance on-chain. Curation, authenticity and creator royalties define value in digital art.",
+ use:"Let digital artists mint and sell NFTs with on-chain provenance and ongoing royalties.",
+ ex:[["SuperRare","USA"],["OpenSea","USA"],["Afen","Africa"],["YellowHeart MENA","Middle East"]]},
+{i:88,cat:"IoT Data Aggregation",purpose:"IoT device management",cover:65,url:"https://www.merakhata.com/",
+ brief:"A platform for managing, monitoring and controlling IoT devices and systems across an organisation. The Nipige ingests device data, visualises telemetry, sets alerts and automates control across diverse hardware. Unified management of heterogeneous devices is the enterprise value.",
+ use:"Unify monitoring and control of diverse IoT devices into one management layer.",
+ ex:[["AggreGate","Global"],["Particle","USA"],["Gricd","Africa"],["IoT Squared","Middle East"]]},
+{i:89,cat:"Tax Assurance",purpose:"Accounting, tax & compliance",cover:80,url:"https://merakhata.com/",
+ brief:"A one-stop platform for SME services — accounting, taxation, legal and fundraising support. The Nipige bundles compliance, bookkeeping and advisory through a network of professionals, simplifying back-office for small businesses. Bundled, affordable expertise is the draw for under-resourced SMEs.",
+ use:"Bundle accounting, tax and legal compliance into one affordable SME back-office service.",
+ ex:[["Merakhata","India"],["Bench","USA"],["Kippa","Africa"],["Wafeq","Middle East"]]},
+{i:90,cat:"Diagnostic Services",purpose:"Diagnostic lab aggregator",cover:95,url:"https://www.labsadvisor.com/",
+ brief:"An online platform aggregating diagnostic services from multiple labs and centres. The Nipige lets patients compare tests and prices, book home sample collection, and get digital reports. Price transparency and convenience in a fragmented, opaque diagnostics market drive bookings.",
+ use:"Bring price transparency and home sample collection to fragmented diagnostic testing.",
+ ex:[["LabsAdvisor","India"],["LabCorp","USA"],["54gene","Africa"],["Rology","Middle East"]]},
+{i:91,cat:"Lawyers Service",purpose:"Legal help marketplace",cover:90,url:"https://www.legalindia.com/",
+ brief:"A platform giving individuals and businesses access to lawyers for everyday legal issues. The Nipige matches users with verified advocates by specialisation, manages consultations and documentation, and tracks cases. Affordable, accessible legal help for common disputes is the core promise.",
+ use:"Connect individuals and SMEs to specialised lawyers for everyday legal problems.",
+ ex:[["LegalIndia","India"],["Avvo","USA"],["Lawyard","Africa"],["Legal Inz","Middle East"]]},
+{i:92,cat:"Dealer Network Aggregator",purpose:"B2B trade marketplace",cover:90,url:"https://www.tradeindia.com/",
+ brief:"A B2B marketplace where businesses expand reach, find buyers or suppliers, and promote products. The Nipige hosts company catalogues, generates trade leads, verifies sellers and facilitates inquiries. A digital trade hub connecting manufacturers, exporters and distributors at scale.",
+ use:"Connect manufacturers and buyers in a digital trade hub, monetising verified seller leads.",
+ ex:[["TradeIndia","India"],["Alibaba","China"],["Tradedepot","Africa"],["Tradeling","Middle East"]]},
+{i:93,cat:"Money Transfer",purpose:"Cross-border remittance",cover:75,url:"https://www.remitly.com/",
+ brief:"A remittance platform letting individuals send money across borders quickly and securely. The Nipige handles compliance, FX, multiple payout methods and instant transfers, serving migrants sending money home. Speed, low fees and reliable delivery determine loyalty in remittances.",
+ use:"Let migrants send money home fast and cheap with reliable cross-border delivery.",
+ ex:[["Remitly","USA"],["Wise","UK"],["Chipper Cash","Africa"],["Denarii","Middle East"]]},
+{i:94,cat:"Cloud POS",purpose:"Point-of-sale system",cover:95,url:"https://squareup.com/",
+ brief:"A cloud point-of-sale platform turning phones, tablets and computers into full POS systems. The Nipige provides payment acceptance, inventory, sales analytics, and add-on financial services for merchants. Easy hardware-light setup plus a financial-services ecosystem lock in small merchants.",
+ use:"Turn any device into a merchant POS, then layer on payments, inventory and lending.",
+ ex:[["Square","USA"],["Pine Labs","India"],["Nomba","Africa"],["Foodics","Middle East"]]},
+{i:95,cat:"Buy Liquor Online",purpose:"Online liquor delivery",cover:100,url:"https://myliquorhub.com/",
+ brief:"A platform for ordering liquor, wine and mixers online with age verification and delivery. The Nipige aggregates licensed retailers, verifies age and compliance, and manages delivery within regulatory limits. Navigating tight regulation while offering convenience is the core challenge and moat.",
+ use:"Offer compliant, age-verified liquor delivery by aggregating licensed retailers.",
+ ex:[["LiquorHub","India"],["Drizly","USA"],["The Bottle Store","Africa"],["African+Eastern","Middle East"]]},
+{i:96,cat:"Stadium Aggregator",purpose:"Live-event ticketing",cover:80,url:"https://www.stubhub.com/",
+ brief:"A global ticketing marketplace for concerts, sports, theatre and live entertainment, including resale. The Nipige connects primary and secondary ticket supply with fans, guaranteeing valid tickets and fair pricing. Trust in resale authenticity and broad event coverage drive volume.",
+ use:"Connect fans with primary and resale event tickets under a validity guarantee.",
+ ex:[["StubHub","USA"],["Ticketmaster","USA"],["Tixsa","Africa"],["Platinumlist","Middle East"]]},
+{i:97,cat:"Farm to Home D2C",purpose:"Direct-from-farm produce",cover:95,url:"https://freshfolds.co.uk/",
+ brief:"A direct-to-consumer service delivering fresh produce straight from farms to homes. The Nipige shortens the supply chain, ensures freshness and fair farmer pay, and runs subscription veg/fruit boxes. Traceability and freshness command a premium while improving farmer margins.",
+ use:"Shorten the farm-to-table chain with fresh, traceable produce boxes on subscription.",
+ ex:[["FreshFolds","UK"],["Imperfect Foods","USA"],["Twiga Foods","Africa"],["Barakat Fresh","Middle East"]]},
+{i:98,cat:"Peer to Peer App",purpose:"Goods & services exchange",cover:90,url:"https://kolkata.craigslist.org/",
+ brief:"A peer-to-peer classifieds platform for exchanging goods and services online within a locality. The Nipige hosts free listings across categories — jobs, housing, items, services — and connects local buyers and sellers. Simplicity, breadth and local liquidity are the enduring strengths.",
+ use:"Provide a simple, broad local board where anyone can exchange goods, services and jobs.",
+ ex:[["Craigslist","USA"],["OLX","India"],["Jiji","Africa"],["Dubizzle","Middle East"]]},
+{i:99,cat:"IT Services / Hardware",purpose:"IT & electronics retail",cover:75,url:"https://www.newegg.com/",
+ brief:"An online retailer specialising in computer hardware, electronics and IT components. The Nipige offers deep technical catalogues, build guides, reviews and competitive pricing for enthusiasts and businesses. Specialist depth and tech-savvy community trust differentiate it from generalists.",
+ use:"Serve tech enthusiasts and IT buyers with deep hardware catalogues and build guidance.",
+ ex:[["Newegg","USA"],["MD Computers","India"],["Yudala","Africa"],["Sharaf DG","Middle East"]]},
+{i:100,cat:"Fintech — Recharges",purpose:"Recharges & utility payments",cover:70,url:"https://www.mobikwik.com/",
+ brief:"A fintech app for mobile recharges, utility bill payments and a digital wallet. The Nipige enables fast prepaid recharges, automated bills, wallet payments and cross-sells credit and insurance. High-frequency recharge use builds the habit that funnels into broader financial products.",
+ use:"Use frequent recharges and bill pay to build a wallet habit and cross-sell credit.",
+ ex:[["MobiKwik","India"],["Paytm","India"],["OPay","Africa"],["Fawry","Middle East"]]}
+];
+
+const AFME = new Set(["Africa","Middle East"]);
+const REGIONS = ["India","USA","Africa","Middle East","Europe","China","UK","Global"];
+
+const rows = document.getElementById('rows');
+const navList = document.getElementById('navList');
+const navSearch = document.getElementById('navSearch');
+const navCount = document.getElementById('navCount');
+const regionBar = document.getElementById('regionBar');
+let activeRegion = null;
+
+REGIONS.forEach(r=>{
+  const c=document.createElement('div');
+  c.className='chip';c.textContent=r;
+  c.onclick=()=>{
+    if(activeRegion===r){activeRegion=null;c.classList.remove('active')}
+    else{activeRegion=r;document.querySelectorAll('.region-bar .chip').forEach(x=>x.classList.remove('active'));c.classList.add('active')}
+    render();
+  };
+  regionBar.appendChild(c);
+});
+
+function navMatch(d,q){
+  if(!q) return true;
+  const hay=(d.cat+' '+d.purpose+' '+d.brief+' '+d.use+' '+d.ex.map(e=>e[0]).join(' ')).toLowerCase();
+  return q.toLowerCase().split(/\s+/).every(t=>hay.includes(t));
+}
+function regionMatch(d){
+  if(!activeRegion) return true;
+  return d.ex.some(e=>e[1]===activeRegion);
+}
+
+function render(){
+  const q=navSearch.value.trim();
+  const list=DATA.filter(d=>navMatch(d,q)&&regionMatch(d));
+
+  navList.innerHTML='';
+  navCount.textContent=`${list.length} of ${DATA.length} use cases`;
+  list.forEach(d=>{
+    const b=document.createElement('button');
+    b.className='nav-item';b.dataset.target='card-'+d.i;
+    b.innerHTML=`<span class="ni-num">${String(d.i).padStart(2,'0')}</span><span class="ni-txt">${d.cat}</span>`;
+    b.onclick=()=>{
+      document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      const card=document.getElementById('card-'+d.i);
+      card.scrollIntoView({behavior:'smooth',block:'start'});
+      card.classList.add('flash');
+      setTimeout(()=>card.classList.remove('flash'),1200);
+      document.getElementById('nav').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    };
+    navList.appendChild(b);
+  });
+
+  rows.innerHTML='';
+  if(list.length===0){
+    rows.innerHTML=`<div class="no-results"><h3>No use cases found</h3><p>Try a different keyword or clear the region filter.</p></div>`;
+    return;
+  }
+  list.forEach((d,n)=>{
+    const card=document.createElement('div');
+    card.className='card';card.id='card-'+d.i;
+    card.style.animation=`fade .4s ease ${Math.min(n*0.02,0.3)}s both`;
+    card.innerHTML=`
+      <div class="row-head">
+        <div class="idx-badge">№${String(d.i).padStart(2,'0')}</div>
+        <div class="row-titles">
+          <div class="cat">${d.cat}</div>
+          <div class="purpose">${d.purpose}</div>
+        </div>
+        ${d.cover!=null?`<div class="cover">${d.cover}<span>covers</span></div>`:''}
+      </div>
+      <div class="row-body">
+        <div>
+          <div class="field">
+            <div class="field-label">Brief Description</div>
+            <div class="field-text">${d.brief}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Market Use Case</div>
+            <div class="field-text">${d.use}</div>
+          </div>
+        </div>
+        <div>
+          <div class="field-label">Examples by Region</div>
+          <div class="examples">${d.ex.map(e=>`<span class="ex ${AFME.has(e[1])?'afme':''}">${e[0]} <span class="region">· ${e[1]}</span></span>`).join('')}</div>
+          <div class="row-foot"><a class="ref-link" href="${d.url}" target="_blank" rel="noopener">Reference ↗</a></div>
+        </div>
+      </div>`;
+    rows.appendChild(card);
+  });
+}
+
+const menuBtn=document.getElementById('menuBtn');
+const overlay=document.getElementById('overlay');
+menuBtn.onclick=()=>{document.getElementById('nav').classList.add('open');overlay.classList.add('show')};
+overlay.onclick=()=>{document.getElementById('nav').classList.remove('open');overlay.classList.remove('show')};
+
+const style=document.createElement('style');
+style.textContent='@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}';
+document.head.appendChild(style);
+
+navSearch.addEventListener('input',render);
+render();
+</script>
+</body>
+</html>
