@@ -98,39 +98,58 @@ body{
 .feat svg{flex-shrink:0;margin-top:3px;color:var(--green)}
 .d-ref{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none}
 .d-ref:hover{color:var(--accent)}
-/* Phone mock in detail pane */
+/* ===== Phone mock (Mercatus-fidelity) in detail pane ===== */
 .d-section.screen h4{margin-bottom:12px}
-.phone{width:230px;margin:2px auto 4px;border:9px solid #1a1410;border-radius:34px;background:#fff;overflow:hidden;box-shadow:0 18px 40px -22px rgba(26,20,16,.55);position:relative}
-.phone .notch{height:20px;background:#1a1410;border-radius:0 0 12px 12px;width:90px;margin:0 auto}
-.ph-status{display:flex;justify-content:space-between;align-items:center;padding:5px 12px 2px;font-size:8px;font-weight:700;color:#1a1410}
-.ph-head{display:flex;align-items:center;justify-content:space-between;padding:4px 12px 8px}
-.ph-burger{font-size:12px;color:#555}
-.ph-logo{font-family:'Fraunces',serif;font-weight:700;font-size:13px;color:var(--pa)}
-.ph-cart{position:relative;font-size:12px}
-.ph-cart .badge{position:absolute;top:-5px;right:-7px;background:var(--pa);color:#fff;font-size:7px;font-weight:700;border-radius:8px;padding:1px 4px;line-height:1.2}
-.ph-search{margin:0 12px 10px;background:#f1ece3;border-radius:9px;padding:6px 10px;font-size:8.5px;color:#9a8e7c;display:flex;align-items:center;gap:5px}
-.ph-sec{padding:0 12px;margin-bottom:10px}
-.ph-sec-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-.ph-sec-top b{font-size:9.5px;color:#1a1410}
-.ph-sec-top span{font-size:7.5px;color:var(--pa);font-weight:700}
-.ph-cats{display:flex;gap:6px}
+.phone{width:268px;margin:0 auto;background:#0d0d0f;border-radius:42px;padding:10px;box-shadow:0 26px 60px -26px rgba(26,20,16,.65),inset 0 0 0 2px #2a2a2e}
+.screenwrap{background:#fff;border-radius:33px;overflow:hidden;position:relative;font-family:'Public Sans',Arial,sans-serif}
+.ph-dyn{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:78px;height:18px;background:#0d0d0f;border-radius:11px;z-index:6}
+.ph-status{display:flex;justify-content:space-between;align-items:center;padding:9px 18px 4px;font-size:9px;font-weight:700;color:#0d0d0f}
+.ph-status .sig{letter-spacing:1px}
+.ph-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 10px}
+.ph-bar .burger{display:flex;flex-direction:column;gap:2.5px}
+.ph-bar .burger i{width:16px;height:2px;background:#3a3a3a;border-radius:2px;display:block}
+.ph-brand{display:flex;align-items:center;gap:5px;font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:#2b2b2b}
+.ph-brand .glyph{display:flex;gap:1.5px;align-items:flex-end}
+.ph-brand .glyph i{width:3px;background:var(--pa);border-radius:1px;display:block}
+.ph-brand .glyph i:nth-child(1){height:8px}.ph-brand .glyph i:nth-child(2){height:13px}.ph-brand .glyph i:nth-child(3){height:6px}
+.ph-cartwrap{position:relative}
+.ph-cartwrap svg{display:block}
+.ph-cartwrap .cb{position:absolute;top:-6px;right:-7px;background:#3aa856;color:#fff;font-size:8px;font-weight:700;border-radius:9px;padding:1px 5px;line-height:1.3}
+.ph-srch{margin:0 16px 14px;background:#efeff1;border-radius:9px;height:30px;display:flex;align-items:center;gap:7px;padding:0 12px;color:#aaa;font-size:10px}
+.ph-srch svg{width:13px;height:13px;flex:0 0 auto;color:#b5b5b5}
+.ph-cartwrap svg{width:21px;height:21px}
+.ph-block{padding:0 16px;margin-bottom:14px}
+.ph-htop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
+.ph-htop b{font-size:13px;color:#222;font-weight:700}
+.ph-htop span{font-size:9.5px;color:#9a8e7c;font-weight:600}
+.ph-cats{display:flex;gap:4px}
 .ph-cat{flex:1;text-align:center}
-.ph-cat .ic{height:34px;border-radius:10px;background:#faf6ef;border:1px solid #eee2d2;display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:3px}
-.ph-cat small{font-size:6.6px;color:#6a6052;line-height:1.1;display:block}
-.ph-banner{margin:0 12px 9px;height:48px;border-radius:11px;background:linear-gradient(120deg,var(--pa),var(--pa2));display:flex;align-items:center;padding:0 14px}
-.ph-banner b{color:#fff;font-family:'Fraunces',serif;font-size:14px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.18);line-height:1.05}
-.ph-tiles{display:flex;gap:7px;margin:0 12px 10px}
-.ph-tile{flex:1;height:34px;border-radius:9px;background:#f3ede4;display:flex;align-items:center;justify-content:center;text-align:center;font-size:7.4px;font-weight:700;color:#5a5142;padding:0 5px}
-.ph-feat{display:flex;gap:7px}
+.ph-cat .ic{height:46px;display:flex;align-items:center;justify-content:center;margin-bottom:5px}
+.ph-cat .ic svg{width:38px;height:38px;color:var(--pa)}
+.ph-cat small{font-size:8px;color:#3a3a3a;line-height:1.15;display:block;font-weight:600}
+.ph-hero{margin:0 16px 11px;height:74px;border-radius:13px;position:relative;overflow:hidden;display:flex;align-items:center;background:linear-gradient(110deg,var(--pa) 60%,var(--pa2))}
+.ph-hero .title{color:#fff;font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:21px;padding-left:16px;line-height:1;text-shadow:0 2px 6px rgba(0,0,0,.22);max-width:62%}
+.ph-hero .disc{position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.9),rgba(255,255,255,.25) 60%,transparent 70%)}
+.ph-tiles{display:flex;gap:9px;margin:0 16px 16px}
+.ph-tile{flex:1;height:58px;border-radius:11px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:8px 9px}
+.ph-tile span{position:relative;z-index:2;color:#fff;font-weight:800;font-size:11px;line-height:1.05;text-shadow:0 1px 4px rgba(0,0,0,.35)}
+.ph-tile.t1{background:linear-gradient(135deg,#7d8a3a,#aeb96a)}
+.ph-tile.t2{background:linear-gradient(135deg,#c9577e,#e7a0b8)}
+.ph-feat{display:flex;gap:9px}
 .ph-fitem{flex:1}
-.ph-fitem .thumb{height:40px;border-radius:9px;background:#faf6ef;border:1px solid #eee2d2;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:3px}
-.ph-fitem .fn{font-size:7px;font-weight:700;color:#1a1410;line-height:1.1}
-.ph-fitem .fs{font-size:6.4px;color:#9a8e7c}
-.ph-tabs{display:flex;border-top:1px solid #eee2d2;margin-top:9px}
-.ph-tab{flex:1;text-align:center;padding:6px 0 7px;font-size:6.6px;color:#9a8e7c}
-.ph-tab.on{color:var(--pa);font-weight:700}
-.ph-tab .td{font-size:11px;display:block;margin-bottom:1px}
-.ph-cap{font-size:11px;color:var(--muted);text-align:center;margin-top:2px}
+.ph-fitem .thumb{height:62px;border-radius:10px;background:#f4f1ec;border:1px solid #eee7da;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.ph-fitem .thumb svg{width:30px;height:30px;color:#b9b0a0}
+.ph-fitem .fn{font-size:9px;font-weight:700;color:#222;line-height:1.15}
+.ph-fitem .fs{font-size:8px;color:#9a8e7c;margin-top:1px}
+.ph-fitem .fp{font-size:9px;color:#d23b2f;font-weight:800;margin-top:3px}
+.ph-tabbar{display:flex;align-items:flex-end;border-top:1px solid #eee7da;padding:7px 6px 9px;position:relative;background:#fff}
+.ph-tab{flex:1;text-align:center;color:#b3a99a}
+.ph-tab svg{width:18px;height:18px;display:block;margin:0 auto 2px}
+.ph-tab small{font-size:7px;font-weight:700;letter-spacing:.02em}
+.ph-tab.on{color:var(--pa)}
+.ph-center{width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid #eee7da;box-shadow:0 -3px 10px -4px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;margin:-26px 2px 0;flex:0 0 auto}
+.ph-center svg{width:18px;height:18px;color:#6a6052}
+.ph-cap{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.4}
 
 .card{cursor:pointer}
 .card.selected{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
@@ -827,31 +846,73 @@ function regionMatch(d){
 
 
 const FAM_PA={C:["#2f5d8a","#5b8fc4"],S:["#6b4a8a","#9a73c4"],E:["#2f6b4f","#5aa37c"]};
-const TAB_ICON={Home:"⌂",Shop:"🛍",Cart:"🛒",Account:"👤",Stores:"🏬",Trips:"🧭",Wallet:"👛",Orders:"📦",Track:"📍",Appts:"📅",Records:"🗂",Classes:"🎓",Tests:"📝",Bookings:"📋",History:"🕘",Scan:"📷",Quotes:"📄",Claims:"🛡",Search:"🔎",Saved:"❤",Sell:"🏷",Buy:"🛒",Chats:"💬",Inbox:"✉",Matches:"💞",Likes:"👍",Categories:"▦",Design:"🎨",Project:"🏗",Cars:"🚗",Care:"🤝",Browse:"🔎",Goals:"🎯",Spends:"💸",Services:"🧰",Discover:"✨",Explore:"🧭",Diet:"🥗",Vet:"🐾",Plans:"📑",Bills:"🧾",Plan:"🗓",Vendors:"🤝",Book:"📅",Access:"🔑",Backed:"💛",Rides:"🚗",Rewards:"🎁",Offers:"%",Library:"📚",Loans:"🏦",EMIs:"📆",Markets:"📈",Salons:"💈",Sessions:"💡",Teams:"👥",Campaigns:"📣",Data:"📊",Connect:"🔗",Agenda:"📜",Give:"🙏",Temples:"🛕",Events:"🎟",Tickets:"🎫",Create:"➕",Devices:"📡",Alerts:"🔔",Tax:"📑",Books:"📚",Reports:"📊",Lawyers:"⚖",Cases:"📁",Trade:"🤝",Leads:"📈",Send:"💸",Activity:"📊",Stock:"📦",Box:"🧺",Post:"➕",Members:"👥",Schedule:"🗓",Cards:"🎴",List:"📝","My List":"📑","My Routes":"🗺","Who Liked You":"👍"};
-const CAT_ICON=["▦","◇","◷","✦","❖","◈","✿","☼"];
+
+// minimal line-icon set (inherits currentColor)
+const I={
+  cart:'<svg viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.2 12.5a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L22 7H6"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>'
+};
+// category glyphs (line art, color = family accent via currentColor)
+function catIcon(j){
+  const g=[
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h13l-1.5 9H6.5L4 7Z"/><path d="M9 11h6"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="13" r="7"/><path d="M12 6c0-2 1-3 3-3"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21c-4-2-6-6-6-10 3 0 6 2 6 5"/><path d="M12 21c4-2 6-6 6-10-3 0-6 2-6 5"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="9" width="16" height="6" rx="3"/><circle cx="9" cy="12" r="1"/><circle cx="14" cy="12" r="1"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m12 4 2.4 5 5.6.5-4.2 3.7 1.3 5.5L12 21l-5.1 2.7 1.3-5.5L4 14.5 9.6 14 12 4Z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16M10 4v16"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v18M5 8c0-2 3-3 7-3s7 1 7 3"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>'
+  ];
+  return g[j%g.length];
+}
+function tabIcon(name){
+  const m={
+    Home:'<path d="M3 11 12 4l9 7"/><path d="M5 10v9h14v-9"/>',
+    Shop:'<path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/>',
+    Cart:'<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M3 4h2l2 12h11"/>',
+    Account:'<circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/>'
+  };
+  const body=m[name]||'<circle cx="12" cy="12" r="8"/>';
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+body+'</svg>';
+}
 function phoneMock(d){
   const sc = SCREEN[d.i]; if(!sc) return '';
   const pa = FAM_PA[d.fam]||["#d4521f","#e0824f"];
-  const cats = sc.cats.map((c,j)=>`<div class="ph-cat"><div class="ic">${CAT_ICON[j%CAT_ICON.length]}</div><small>${c}</small></div>`).join('');
-  const tiles = sc.tiles.map(t=>`<div class="ph-tile">${t}</div>`).join('');
-  const feats = sc.feat.map(f=>`<div class="ph-fitem"><div class="thumb">◰</div><div class="fn">${f[0]}</div><div class="fs">${f[1]}</div></div>`).join('');
-  const tabs = sc.tabs.map((t,j)=>`<div class="ph-tab ${j===0?'on':''}"><span class="td">${TAB_ICON[t]||"•"}</span>${t}</div>`).join('');
+  const cats = sc.cats.map((c,j)=>`<div class="ph-cat"><div class="ic">${catIcon(j)}</div><small>${c}</small></div>`).join('');
+  const tiles = sc.tiles.map((t,j)=>`<div class="ph-tile t${j+1}"><span>${t}</span></div>`).join('');
+  const feats = sc.feat.map(f=>`<div class="ph-fitem"><div class="thumb">${I.search?'' :''}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m4 16 4-4 3 3 4-5 5 6"/><circle cx="9" cy="9" r="1.4"/></svg></div><div class="fn">${f[0]}</div><div class="fs">${f[1]}</div><div class="fp">Best price</div></div>`).join('');
+  // bottom tabs: insert raised center button between tab2 and tab3
+  const t=sc.tabs;
+  const left=t.slice(0,2).map((x,j)=>`<div class="ph-tab ${j===0?'on':''}">${tabIcon(x)}<small>${x.toUpperCase()}</small></div>`).join('');
+  const right=t.slice(2,4).map(x=>`<div class="ph-tab">${tabIcon(x)}<small>${x.toUpperCase()}</small></div>`).join('');
   const logo = d.cat.split(/[ —/&]/)[0];
   return `
   <div class="d-section screen">
     <h4>Mobile Home Screen</h4>
     <div class="phone" style="--pa:${pa[0]};--pa2:${pa[1]}">
-      <div class="notch"></div>
-      <div class="ph-status"><span>9:41</span><span>● ▮ ▰</span></div>
-      <div class="ph-head"><span class="ph-burger">☰</span><span class="ph-logo">${logo}</span><span class="ph-cart">🛒<span class="badge">3</span></span></div>
-      <div class="ph-search">🔍 Search…</div>
-      <div class="ph-sec"><div class="ph-sec-top"><b>Shop by Category</b><span>View All</span></div><div class="ph-cats">${cats}</div></div>
-      <div class="ph-banner"><b>${sc.banner}</b></div>
-      <div class="ph-tiles">${tiles}</div>
-      <div class="ph-sec"><div class="ph-sec-top"><b>Featured</b><span>View All</span></div><div class="ph-feat">${feats}</div></div>
-      <div class="ph-tabs">${tabs}</div>
+      <div class="screenwrap">
+        <div class="ph-dyn"></div>
+        <div class="ph-status"><span>9:41</span><span class="sig">5G&nbsp;&nbsp;&#9646;&#9646;&#9646;&#9646;&nbsp;&#128267;</span></div>
+        <div class="ph-bar">
+          <span class="burger"><i></i><i></i><i></i></span>
+          <span class="ph-brand"><span class="glyph"><i></i><i></i><i></i></span>${logo}</span>
+          <span class="ph-cartwrap">${I.cart}<span class="cb">${(d.i%9)+3}</span></span>
+        </div>
+        <div class="ph-srch">${I.search} Search for products</div>
+        <div class="ph-block"><div class="ph-htop"><b>Shop By Category</b><span>View All</span></div><div class="ph-cats">${cats}</div></div>
+        <div class="ph-hero"><div class="title">${sc.banner}</div><div class="disc"></div></div>
+        <div class="ph-tiles">${tiles}</div>
+        <div class="ph-block"><div class="ph-htop"><b>Featured</b><span>View All</span></div><div class="ph-feat">${feats}</div></div>
+        <div class="ph-tabbar">
+          ${left}
+          <div class="ph-center">${I.chev}</div>
+          ${right}
+        </div>
+      </div>
     </div>
-    <div class="ph-cap">Illustrative home screen for a ${d.cat} app</div>
+    <div class="ph-cap">Illustrative ${logo} home screen — styled after the reference layout</div>
   </div>`;
 }
 
