@@ -71,12 +71,73 @@ body{
 
 /* Main */
 .main{flex:1;min-width:0;padding:34px 40px 80px;max-width:1000px}
+/* Detail pane */
+.main{flex:1;min-width:0;padding:34px 40px 80px;max-width:none}
+.detail{
+  width:360px;flex-shrink:0;position:sticky;top:0;height:100vh;
+  border-left:1px solid var(--line);background:rgba(255,253,248,.85);
+  backdrop-filter:blur(8px);overflow-y:auto;padding:30px 26px;
+}
+.detail::-webkit-scrollbar{width:8px}
+.detail::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.detail-empty{color:var(--muted);font-size:14px;margin-top:40px;text-align:center}
+.detail-empty svg{display:block;margin:0 auto 14px;opacity:.5}
+.d-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.d-pinrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.d-pin{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:3px 8px;border-radius:6px;display:none}
+.d-pin.show{display:inline-block}
+.d-title{font-family:'Fraunces',serif;font-size:26px;font-weight:600;line-height:1.1;letter-spacing:-.02em;margin:6px 0 4px}
+.d-purpose{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:18px}
+.d-section{margin-bottom:22px}
+.d-section h4{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+.persona{display:flex;gap:10px;align-items:flex-start;margin-bottom:11px}
+.persona .pin-dot{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;font-family:'Fraunces',serif}
+.persona .pna{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.2}
+.persona .pro{font-size:12px;color:var(--muted);line-height:1.35}
+.feat{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#3a3228;margin-bottom:9px;line-height:1.4}
+.feat svg{flex-shrink:0;margin-top:3px;color:var(--green)}
+.d-ref{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none}
+.d-ref:hover{color:var(--accent)}
+.card{cursor:pointer}
+.card.selected{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.card.selected::before{transform:scaleY(1)}
+
+@media(max-width:1180px){
+  .detail{position:fixed;right:0;top:0;z-index:120;transform:translateX(100%);transition:transform .28s;box-shadow:-20px 0 50px -30px rgba(26,20,16,.5);width:380px;max-width:88vw}
+  .detail.open{transform:none}
+  .detail-close{display:flex !important}
+  .main{max-width:none}
+}
+.detail-close{display:none;position:absolute;top:16px;right:16px;width:34px;height:34px;border:none;background:var(--accent-soft);color:var(--accent);border-radius:8px;font-size:18px;cursor:pointer;align-items:center;justify-content:center}
+
 .intro{margin-bottom:30px}
 .intro .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
 .intro h1{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,46px);font-weight:600;line-height:1.05;letter-spacing:-.02em}
 .intro h1 em{font-style:italic;color:var(--accent)}
 .intro p{max-width:620px;margin-top:12px;color:var(--muted);font-size:15px}
 .region-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+/* Family tags & grouping */
+.fam-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:6px;margin-left:2px}
+.fam-C{background:#e7eef7;color:#2f5d8a}
+.fam-S{background:#f0e9f7;color:#6b4a8a}
+.fam-E{background:var(--green-soft);color:var(--green)}
+.row-titles .fam-tag{margin-left:0;margin-top:6px}
+.group-head{display:flex;align-items:center;gap:12px;margin:34px 2px 4px;padding-bottom:0}
+.group-head:first-child{margin-top:0}
+.group-head h2{font-family:'Fraunces',serif;font-size:24px;font-weight:600;letter-spacing:-.01em}
+.group-head .gcount{font-size:12px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);padding:2px 10px;border-radius:20px}
+.group-head .gline{flex:1;height:1px;background:var(--line)}
+.fam-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.fam-dot.C{background:#2f5d8a}.fam-dot.S{background:#6b4a8a}.fam-dot.E{background:var(--green)}
+.nav-group{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--muted);padding:14px 11px 5px;display:flex;align-items:center;gap:7px}
+.fam-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.fchip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid var(--line);background:var(--card);cursor:pointer;transition:all .16s;display:flex;align-items:center;gap:7px}
+.fchip:hover{border-color:var(--ink)}
+.fchip.active{color:#fff;border-color:transparent}
+.fchip[data-f="C"].active{background:#2f5d8a}.fchip[data-f="S"].active{background:#6b4a8a}.fchip[data-f="E"].active{background:var(--green)}
+.fchip .fam-dot{width:9px;height:9px;border-radius:2px}
+.fchip.active .fam-dot{background:#fff !important}
+
 .chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;transition:all .16s}
 .chip:hover{border-color:var(--accent);color:var(--accent)}
 .chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -147,420 +208,536 @@ body{
       <div class="eyebrow">Marketplace Use-Case Library</div>
       <h1>What can a <em>Nipige</em> be?</h1>
       <p>A searchable catalog of 100 marketplace and aggregator models — each with a brief, a market use case, and live examples spanning India, the West, Asia, <strong>Africa and the Middle East</strong>. Pick a use case from the left, or filter by region.</p>
+      <div class="fam-bar" id="famBar"></div>
       <div class="region-bar" id="regionBar"></div>
     </div>
     <div class="rows" id="rows"></div>
   </main>
+  <aside class="detail" id="detail">
+    <button class="detail-close" id="detailClose">×</button>
+    <div id="detailInner">
+      <div class="detail-empty" id="detailEmpty">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M17 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M2 20c0-3 2.5-5 7-5s7 2 7 5"/><path d="M15 15c3.5.3 5 2.2 5 5"/></svg>
+        Hover or click a use case to see its target personas and key features.
+      </div>
+    </div>
+  </aside>
 </div>
 
 <script>
 const DATA = [
-{i:1,cat:"Agritech — Grocery Delivery",purpose:"On-demand grocery delivery",cover:100,url:"https://www.bigbasket.com/",
+{i:1,fam:"C",cat:"Agritech — Grocery Delivery",purpose:"On-demand grocery delivery",cover:100,url:"https://www.bigbasket.com/",
  brief:"A digital storefront that lets households order fresh produce, staples and packaged goods for fast home delivery. The Nipige aggregates local kirana stores, dark stores and farm suppliers into a single inventory, manages real-time stock and slot booking, and runs a last-mile rider fleet. It removes the trip to the market, guarantees freshness windows, and gives small grocers an online channel they could never build alone.",
  use:"Convert neighbourhood grocery demand into a delivery-first subscription habit with recurring baskets.",
  ex:[["BigBasket","India"],["Instacart","USA"],["Jumia Food","Africa"],["Talabat Mart","Middle East"]]},
-{i:2,cat:"Agritech — Grocery Aggregation",purpose:"Multi-store grocery aggregator",cover:100,url:"https://www.instacart.com/",
+{i:2,fam:"C",cat:"Agritech — Grocery Aggregation",purpose:"Multi-store grocery aggregator",cover:100,url:"https://www.instacart.com/",
  brief:"A marketplace that connects shoppers with multiple supermarkets and personal shoppers rather than holding its own stock. The Nipige surfaces catalogues from many retailers, lets users compare and mix carts across stores, and dispatches a shopper to pick and deliver. Asset-light by design, it monetises through retailer commissions, delivery fees and ads, while giving regional chains instant e-commerce reach.",
  use:"Let existing grocery chains go online overnight without building their own logistics or app.",
  ex:[["Instacart","USA"],["BigBasket","India"],["Tendo","Africa"],["Nana","Middle East"]]},
-{i:3,cat:"Taxi Aggregation",purpose:"Cab & ride aggregator",cover:70,url:"https://www.olacabs.com/",
+{i:3,fam:"S",cat:"Taxi Aggregation",purpose:"Cab & ride aggregator",cover:70,url:"https://www.olacabs.com/",
  brief:"A ride-hailing platform matching passengers with nearby drivers in real time. The Nipige handles GPS dispatch, dynamic pricing, in-app payments, driver ratings and route optimisation. It onboards independent car owners as supply and commuters as demand, turning idle vehicles into earning assets. Trust, ETA accuracy and surge transparency are the core value drivers.",
  use:"Aggregate fragmented local taxi supply into one reliable, cashless on-demand mobility layer.",
  ex:[["Ola","India"],["Uber","USA"],["Bolt","Africa"],["Careem","Middle East"]]},
-{i:4,cat:"Pharmacy",purpose:"Pharmacy delivery & aggregator",cover:90,url:"https://www.1mg.com/",
+{i:4,fam:"C",cat:"Pharmacy",purpose:"Pharmacy delivery & aggregator",cover:90,url:"https://www.1mg.com/",
  brief:"An online chemist that lets patients upload prescriptions, order medicines and OTC products, and get them delivered. The Nipige aggregates licensed pharmacies, verifies prescriptions, flags drug interactions, and offers refill reminders and tele-consults. It improves medicine access in underserved areas and adds diagnostics and e-prescriptions as upsells.",
  use:"Digitise chronic-medication refills into a recurring, reminder-driven delivery subscription.",
  ex:[["1mg","India"],["Capsule","USA"],["mPharma","Africa"],["Whites Pharmacy","Middle East"]]},
-{i:6,cat:"Healthcare — Doctor Booking",purpose:"Doctor discovery & appointments",cover:70,url:"https://www.practo.com/",
+{i:6,fam:"S",cat:"Healthcare — Doctor Booking",purpose:"Doctor discovery & appointments",cover:70,url:"https://www.practo.com/",
  brief:"A platform to find verified doctors by specialty, location and rating, then book in-clinic or video appointments. The Nipige manages provider calendars, patient records, tele-consult video, and post-visit prescriptions. It reduces wait times, fills empty doctor slots, and builds a longitudinal health profile that powers follow-up care.",
  use:"Fill doctors' idle appointment slots while giving patients instant, reviewed access to care.",
  ex:[["Practo","India"],["Zocdoc","USA"],["Helium Health","Africa"],["Vezeeta","Middle East"]]},
-{i:7,cat:"Furniture & Interiors",purpose:"Home decor & furniture",cover:80,url:"https://www.livspace.com/",
+{i:7,fam:"S",cat:"Furniture & Interiors",purpose:"Home decor & furniture",cover:80,url:"https://www.livspace.com/",
  brief:"A managed marketplace connecting homeowners with interior designers, modular-furniture factories and installers. The Nipige offers 3D design tools, transparent quotes, project tracking and warranty-backed execution end to end. It de-risks a notoriously opaque category by standardising pricing and timelines while giving local craftsmen scaled demand.",
  use:"Turn a one-off renovation into a guided, milestone-based project with bundled product sales.",
  ex:[["Livspace","India"],["Havenly","USA"],["Tovgad","Africa"],["The One","Middle East"]]},
-{i:8,cat:"Edutech — Online Education",purpose:"Online learning platform",cover:60,url:"https://unacademy.com/",
+{i:8,fam:"E",cat:"Edutech — Online Education",purpose:"Online learning platform",cover:60,url:"https://unacademy.com/",
  brief:"A platform delivering live and recorded classes from expert educators to learners at scale. The Nipige hosts video, quizzes, doubt-clearing and subscription plans, matching top teachers with students far beyond their physical reach. Test-prep, skilling and exam cohorts are common verticals, monetised via subscriptions and premium batches.",
  use:"Scale a star educator's reach from one classroom to a national paying subscriber base.",
  ex:[["Unacademy","India"],["Coursera","USA"],["uLesson","Africa"],["Noon Academy","Middle East"]]},
-{i:9,cat:"Automobiles — Auto Service",purpose:"Car service & repair",cover:70,url:"https://gomechanic.in/",
+{i:9,fam:"S",cat:"Automobiles — Auto Service",purpose:"Car service & repair",cover:70,url:"https://gomechanic.in/",
  brief:"A platform for booking car servicing, repairs and spares through a network of vetted garages. The Nipige offers transparent fixed pricing, doorstep pickup, live job tracking and genuine-parts assurance. It tackles the trust deficit of local mechanics and gives independent workshops a steady, branded order flow.",
  use:"Standardise opaque garage pricing into transparent, bookable service packages with pickup.",
  ex:[["GoMechanic","India"],["YourMechanic","USA"],["Garage Mobility","Africa"],["Carzaty","Middle East"]]},
-{i:10,cat:"Finance — Fintech & Payments",purpose:"Wallet, transfers & bill pay",cover:70,url:"https://paytm.com/",
+{i:10,fam:"C",cat:"Finance — Fintech & Payments",purpose:"Wallet, transfers & bill pay",cover:70,url:"https://paytm.com/",
  brief:"A super-app for digital payments — wallet top-ups, UPI/QR transfers, bill payments, recharges and merchant checkout. The Nipige links bank accounts and cards, settles merchant payments, and cross-sells lending, insurance and investments off the transaction graph. Ubiquity and trust make payments the wedge into broader financial services.",
  use:"Use everyday bill-pay and QR payments as the hook to cross-sell credit and insurance.",
  ex:[["Paytm","India"],["Venmo","USA"],["M-Pesa","Africa"],["STC Pay","Middle East"]]},
-{i:11,cat:"Insurance",purpose:"Insurance aggregator",cover:80,url:"https://www.policybazaar.com/",
+{i:11,fam:"C",cat:"Insurance",purpose:"Insurance aggregator",cover:80,url:"https://www.policybazaar.com/",
  brief:"A comparison marketplace where users compare quotes across insurers for health, motor, life and travel cover, then buy online. The Nipige normalises complex policy terms, runs eligibility and claims support, and earns commissions from insurers. It cuts through agent opacity with side-by-side transparency and digital onboarding.",
  use:"Replace pushy agents with transparent quote comparison and assisted, commission-funded sales.",
  ex:[["PolicyBazaar","India"],["Policygenius","USA"],["Naked Insurance","Africa"],["Yallacompare","Middle East"]]},
-{i:12,cat:"Opticals",purpose:"Eyewear online",cover:80,url:"https://www.lenskart.com/",
+{i:12,fam:"C",cat:"Opticals",purpose:"Eyewear online",cover:80,url:"https://www.lenskart.com/",
  brief:"An omnichannel eyewear store offering prescription glasses, sunglasses and lenses with home try-on and AR fitting. The Nipige manages prescriptions, virtual try-on, optician tie-ups and home eye-tests, blending online convenience with offline trust. Vertical integration of frames and lenses drives margins.",
  use:"Pair virtual try-on with at-home eye tests to convert offline spectacle buyers online.",
  ex:[["Lenskart","India"],["Warby Parker","USA"],["Eyewa","Middle East"],["OptiBuy","Africa"]]},
-{i:13,cat:"Beauty",purpose:"Cosmetics & beauty store",cover:80,url:"https://www.nykaa.com/",
+{i:13,fam:"C",cat:"Beauty",purpose:"Cosmetics & beauty store",cover:80,url:"https://www.nykaa.com/",
  brief:"A curated marketplace for makeup, skincare, fragrance and grooming across global and local brands. The Nipige offers authentic-product assurance, expert content, reviews and personalised recommendations, plus its own private labels. Content-to-commerce — tutorials feeding into purchases — is the engine.",
  use:"Drive beauty discovery through expert content that funnels directly into authenticated purchases.",
  ex:[["Nykaa","India"],["Sephora","France"],["Boutiqaat","Middle East"],["BeautyClick","Africa"]]},
-{i:14,cat:"Re-Commerce",purpose:"Used electronics resale",cover:90,url:"https://www.cashify.in/",
+{i:14,fam:"C",cat:"Re-Commerce",purpose:"Used electronics resale",cover:90,url:"https://www.cashify.in/",
  brief:"A platform to sell, buy or trade-in used smartphones and gadgets at an instant, fair price. The Nipige runs diagnostic-based valuation, doorstep pickup, data-wipe assurance and refurb resale. It unlocks value from idle devices and feeds a circular, affordable second-hand market.",
  use:"Convert idle old phones into instant cash and refurbished resale supply via doorstep pickup.",
  ex:[["Cashify","India"],["Back Market","France"],["Badili","Africa"],["Cartlow","Middle East"]]},
-{i:15,cat:"Logistics",purpose:"Door-to-door delivery",cover:85,url:"https://www.delhivery.com/",
+{i:15,fam:"S",cat:"Logistics",purpose:"Door-to-door delivery",cover:85,url:"https://www.delhivery.com/",
  brief:"A tech-led logistics network handling first-mile, sorting, line-haul and last-mile delivery for e-commerce and businesses. The Nipige provides shipment booking, real-time tracking, COD reconciliation and returns management across a wide pin-code footprint. Scale, reliability and reach are the moats.",
  use:"Give e-commerce sellers nationwide fulfilment with tracking, COD and returns built in.",
  ex:[["Delhivery","India"],["FedEx","USA"],["Sendy","Africa"],["Aramex","Middle East"]]},
-{i:16,cat:"Matrimonial",purpose:"Matchmaking services",cover:85,url:"https://www.shaadi.com/",
+{i:16,fam:"E",cat:"Matrimonial",purpose:"Matchmaking services",cover:85,url:"https://www.shaadi.com/",
  brief:"A profile-based matchmaking platform where individuals and families find marriage partners by community, profession and preferences. The Nipige offers verified profiles, privacy controls, AI match suggestions and premium concierge plans. Trust, verification and cultural fit are central to conversion.",
  use:"Monetise serious marriage intent through verified profiles and premium matchmaking tiers.",
  ex:[["Shaadi.com","India"],["eHarmony","USA"],["Muzz","Middle East"],["Cupid Africa","Africa"]]},
-{i:17,cat:"Buy & Sell",purpose:"Peer-to-peer classifieds",cover:90,url:"https://www.olx.in/",
+{i:17,fam:"C",cat:"Buy & Sell",purpose:"Peer-to-peer classifieds",cover:90,url:"https://www.olx.in/",
  brief:"A classifieds marketplace for individuals to buy and sell used goods — cars, electronics, furniture and more — locally. The Nipige provides listings, chat, location matching and optional escrow or delivery. Liquidity of supply and demand in each city is the flywheel; monetisation comes from featured listings and ads.",
  use:"Build hyper-local liquidity so any used item finds a nearby buyer within days.",
  ex:[["OLX","India"],["Craigslist","USA"],["Jiji","Africa"],["Dubizzle","Middle East"]]},
-{i:18,cat:"Food & Restaurant",purpose:"Food delivery aggregator",cover:100,url:"https://www.swiggy.com/",
+{i:18,fam:"S",cat:"Food & Restaurant",purpose:"Food delivery aggregator",cover:100,url:"https://www.swiggy.com/",
  brief:"An aggregator connecting diners with restaurants for delivery and pickup, plus its own rider fleet. The Nipige manages menus, real-time order routing, live tracking, payments and ratings. It expands restaurant reach beyond walk-ins while owning the hungry-now demand moment; cloud kitchens and groceries extend the model.",
  use:"Capture the hungry-now moment and turn restaurant reach into per-order commission revenue.",
  ex:[["Swiggy","India"],["DoorDash","USA"],["Jumia Food","Africa"],["Talabat","Middle East"]]},
-{i:19,cat:"Real Estate",purpose:"Property buy/sell/rent",cover:85,url:"https://www.99acres.com/",
+{i:19,fam:"C",cat:"Real Estate",purpose:"Property buy/sell/rent",cover:85,url:"https://www.99acres.com/",
  brief:"A property marketplace listing flats, plots, houses and commercial space for sale and rent. The Nipige offers verified listings, virtual tours, locality insights, and connects buyers with sellers, brokers and developers. Lead generation for developers and brokers funds the platform.",
  use:"Aggregate scattered property listings into a trusted search with developer lead-gen monetisation.",
  ex:[["99acres","India"],["Zillow","USA"],["BuyRentKenya","Africa"],["Property Finder","Middle East"]]},
-{i:20,cat:"Travel Booking",purpose:"Travel ticket booking",cover:85,url:"https://www.makemytrip.com/",
+{i:20,fam:"S",cat:"Travel Booking",purpose:"Travel ticket booking",cover:85,url:"https://www.makemytrip.com/",
  brief:"An online travel agency for booking flights, trains, buses, hotels and holiday packages in one place. The Nipige integrates supplier inventory, dynamic pricing, loyalty and trip management, bundling cross-sells like insurance and cabs. Convenience of one-stop itinerary planning drives basket size.",
  use:"Bundle flights, stays and add-ons into one itinerary to maximise per-traveller revenue.",
  ex:[["MakeMyTrip","India"],["Expedia","USA"],["Travelstart","Africa"],["Wego","Middle East"]]},
-{i:21,cat:"Driver Aggregators",purpose:"On-demand drivers",cover:90,url:"https://www.driveu.in/",
+{i:21,fam:"S",cat:"Driver Aggregators",purpose:"On-demand drivers",cover:90,url:"https://www.driveu.in/",
  brief:"A platform that supplies trained drivers on demand to people who own a car but need someone to drive it. The Nipige vets and trains drivers, handles booking, GPS tracking and ratings for hourly, outstation or valet needs. It serves owners who can't or won't drive — a niche distinct from cab-hailing.",
  use:"Serve car owners needing a driver, not a cab — hourly, outstation or designated-driver gigs.",
  ex:[["DriveU","India"],["Dryver","USA"],["DriverGo","Africa"],["Saify Driver","Middle East"]]},
-{i:22,cat:"B2B Commerce",purpose:"Manufacturer-to-distributor trade",cover:90,url:"https://udaan.com/",
+{i:22,fam:"C",cat:"B2B Commerce",purpose:"Manufacturer-to-distributor trade",cover:90,url:"https://udaan.com/",
  brief:"A B2B marketplace connecting manufacturers, wholesalers and retailers for bulk trade with credit and logistics. The Nipige digitises distribution — discovery, ordering, financing and delivery — for kiranas and SMEs. It compresses long supply chains and offers working-capital credit as a key hook.",
  use:"Digitise wholesale distribution and bundle embedded credit to lock in repeat SME buyers.",
  ex:[["Udaan","India"],["Faire","USA"],["TradeDepot","Africa"],["Retailo","Middle East"]]},
-{i:23,cat:"E-commerce",purpose:"General online marketplace",cover:100,url:"https://www.flipkart.com/",
+{i:23,fam:"C",cat:"E-commerce",purpose:"General online marketplace",cover:100,url:"https://www.flipkart.com/",
  brief:"A horizontal marketplace selling everything from electronics to fashion via third-party sellers and fulfilment. The Nipige runs catalogue, search, payments, logistics, returns and seller services at massive scale. Selection, price and delivery speed compound into a self-reinforcing flywheel.",
  use:"Aggregate vast seller selection with fast fulfilment to own the default shopping destination.",
  ex:[["Flipkart","India"],["Amazon","USA"],["Jumia","Africa"],["Noon","Middle East"]]},
-{i:24,cat:"Fintech — Utilities",purpose:"Utility bill payment",cover:90,url:"https://pay.google.com/",
+{i:24,fam:"C",cat:"Fintech — Utilities",purpose:"Utility bill payment",cover:90,url:"https://pay.google.com/",
  brief:"A payments app focused on UPI transfers, recharges and utility bill payments with rewards. The Nipige links bank accounts for instant peer and merchant payments, automates recurring bills, and gamifies with cashback. Frictionless, free P2P payments build the daily-use habit that monetises via merchant and lending tie-ins.",
  use:"Use free, fast payments and bill autopay to build a daily-habit financial gateway.",
  ex:[["Google Pay","India"],["Cash App","USA"],["Flutterwave","Africa"],["Fawry","Middle East"]]},
-{i:25,cat:"Community Service",purpose:"Gated-community management",cover:75,url:"https://www.nobrokerhood.com/",
+{i:25,fam:"S",cat:"Community Service",purpose:"Gated-community management",cover:75,url:"https://www.nobrokerhood.com/",
  brief:"A society-management app for gated communities handling visitor entry, security, maintenance bills, amenities and resident communication. The Nipige digitises gate security with OTP-based visitor passes, automates dues collection, and creates a resident marketplace. It becomes the operating system for apartment living.",
  use:"Become the operating layer for apartment societies — security, billing and resident commerce.",
  ex:[["NoBrokerHood","India"],["BuildingLink","USA"],["Estate Intel","Africa"],["Tasaheel","Middle East"]]},
-{i:26,cat:"Pet Store",purpose:"Pet wellness & supplies",cover:90,url:"https://petfolk.com/",
+{i:26,fam:"C",cat:"Pet Store",purpose:"Pet wellness & supplies",cover:90,url:"https://petfolk.com/",
  brief:"A platform combining pet supplies, vet care, grooming and wellness in one place. The Nipige sells food and accessories, books vet consults and home grooming, and tracks pet health records. Recurring food subscriptions plus a services layer build sticky, high-frequency relationships with pet parents.",
  use:"Combine recurring pet-food subscriptions with on-demand vet and grooming services.",
  ex:[["Petfolk","USA"],["Supertails","India"],["Pet Lovers","Africa"],["PetShop.ae","Middle East"]]},
-{i:27,cat:"Fitness & Wellness",purpose:"Fitness & wellness app",cover:80,url:"https://www.cult.fit/",
+{i:27,fam:"E",cat:"Fitness & Wellness",purpose:"Fitness & wellness app",cover:80,url:"https://www.cult.fit/",
  brief:"A wellness platform offering gym and class memberships, at-home workouts, mental-wellness and healthy food. The Nipige aggregates fitness centres into one pass, streams live and on-demand classes, and bundles nutrition. A single membership unlocking many formats and locations is the core appeal.",
  use:"Sell one membership that unlocks gyms, classes and home workouts across a city.",
  ex:[["cult.fit","India"],["ClassPass","USA"],["FitAfrik","Africa"],["GymNation","Middle East"]]},
-{i:28,cat:"Home Services",purpose:"On-demand home professionals",cover:75,url:"https://www.urbancompany.com/",
+{i:28,fam:"S",cat:"Home Services",purpose:"On-demand home professionals",cover:75,url:"https://www.urbancompany.com/",
  brief:"A marketplace for booking vetted professionals — plumbers, electricians, cleaners, beauticians — for home visits. The Nipige standardises pricing, trains and rates pros, handles scheduling and payment, and warranties the work. It formalises an informal sector and gives gig workers branded, recurring demand.",
  use:"Formalise informal home-repair labour into vetted, fixed-price, warrantied bookings.",
  ex:[["Urban Company","India"],["Thumbtack","USA"],["SweepSouth","Africa"],["Justmop","Middle East"]]},
-{i:29,cat:"Laundry",purpose:"Laundry & dry-cleaning",cover:90,url:"https://www.thelaundrybasket.in/",
+{i:29,fam:"S",cat:"Laundry",purpose:"Laundry & dry-cleaning",cover:90,url:"https://www.thelaundrybasket.in/",
  brief:"An on-demand laundry and dry-cleaning service with pickup and delivery. The Nipige aggregates local laundries and presses, schedules pickups, tracks orders, and offers subscriptions for regular washes. It removes the chore burden for busy urban households and gives small launderers digital order flow.",
  use:"Turn weekly laundry into a scheduled pickup-and-delivery subscription for urban households.",
  ex:[["Laundry Basket","India"],["Rinse","USA"],["Yoza","Africa"],["Washmen","Middle East"]]},
-{i:30,cat:"Education & E-learning",purpose:"Learning management system",cover:65,url:"https://byjus.com/",
+{i:30,fam:"E",cat:"Education & E-learning",purpose:"Learning management system",cover:65,url:"https://byjus.com/",
  brief:"A structured learning platform delivering curriculum-aligned courses, adaptive practice and progress tracking. The Nipige hosts content, gamified learning, assessments and parent dashboards across grades and exams. Personalised learning paths and measurable outcomes justify subscription pricing.",
  use:"Deliver adaptive, curriculum-mapped learning with parent-visible progress to justify subscriptions.",
  ex:[["BYJU'S","India"],["Khan Academy","USA"],["uLesson","Africa"],["Abwaab","Middle East"]]},
-{i:31,cat:"Event Ticketing",purpose:"Event ticket booking",cover:85,url:"https://in.bookmyshow.com/",
+{i:31,fam:"E",cat:"Event Ticketing",purpose:"Event ticket booking",cover:85,url:"https://in.bookmyshow.com/",
  brief:"A ticketing platform for movies, concerts, sports and live events with seat selection and digital tickets. The Nipige integrates venue inventory, dynamic seat maps, payments and event discovery, plus its own live-event production. Owning the booking moment for entertainment drives ancillary F&B and merch sales.",
  use:"Own the entertainment booking moment and upsell seats, F&B and experiences.",
  ex:[["BookMyShow","India"],["Ticketmaster","USA"],["Quicket","Africa"],["Platinumlist","Middle East"]]},
-{i:32,cat:"Home Improvement & Interior Design",purpose:"End-to-end interior platform",cover:60,url:"https://www.homelane.com/",
+{i:32,fam:"S",cat:"Home Improvement & Interior Design",purpose:"End-to-end interior platform",cover:60,url:"https://www.homelane.com/",
  brief:"A platform offering end-to-end home interior design and renovation, bringing homeowners, designers and suppliers together. The Nipige provides design visualisation, transparent quotes, factory-made modular units and managed on-site execution with warranties. It turns a chaotic, multi-vendor process into a single accountable project.",
  use:"Replace fragmented contractor chaos with one accountable, warranty-backed renovation journey.",
  ex:[["HomeLane","India"],["Block Renovation","USA"],["Kandua","Africa"],["Homani","Middle East"]]},
-{i:33,cat:"Car & Bike Rentals",purpose:"Self-drive vehicle hire",cover:70,url:"https://www.zoomcar.com/",
+{i:33,fam:"S",cat:"Car & Bike Rentals",purpose:"Self-drive vehicle hire",cover:70,url:"https://www.zoomcar.com/",
  brief:"A self-drive car and bike rental marketplace, including peer-to-peer vehicle sharing. The Nipige handles bookings, KYC, digital unlocking, insurance and damage management, letting owners monetise idle vehicles and renters access cars without ownership. Flexible hourly-to-weekly rentals fit varied trips.",
  use:"Let people rent cars by the hour and owners earn from idle vehicles — no ownership needed.",
  ex:[["Zoomcar","India"],["Turo","USA"],["Planet42","Africa"],["Udrive","Middle East"]]},
-{i:34,cat:"Elderly Care",purpose:"Senior care services",cover:60,url:"https://care24.co.in/",
+{i:34,fam:"S",cat:"Elderly Care",purpose:"Senior care services",cover:60,url:"https://care24.co.in/",
  brief:"A platform delivering at-home care for seniors — nursing, attendants, physiotherapy and medical equipment. The Nipige vets caregivers, matches them to needs, schedules visits and lets families monitor care remotely. It addresses ageing populations and dispersed families with trustworthy, trackable home care.",
  use:"Give distant families trusted, trackable at-home care for ageing parents.",
  ex:[["Care24","India"],["Care.com","USA"],["Wellahealth","Africa"],["Manzil","Middle East"]]},
-{i:35,cat:"Photography",purpose:"Photography services",cover:80,url:"https://www.weddingbazaar.com/",
+{i:35,fam:"S",cat:"Photography",purpose:"Photography services",cover:80,url:"https://www.weddingbazaar.com/",
  brief:"A marketplace connecting clients with photographers and videographers for weddings, events and shoots. The Nipige showcases portfolios, manages quotes, bookings, contracts and payments, and curates by style and budget. It brings discovery and trust to a referral-driven, freelance-heavy category.",
  use:"Match event clients with vetted photographers via portfolio-led discovery and managed booking.",
  ex:[["WeddingBazaar","India"],["The Knot","USA"],["Shutterhub Africa","Africa"],["Snapper","Middle East"]]},
-{i:36,cat:"Document & Parcel Delivery",purpose:"Drop-shipping & shipping",cover:80,url:"https://app.shiprocket.in/",
+{i:36,fam:"S",cat:"Document & Parcel Delivery",purpose:"Drop-shipping & shipping",cover:80,url:"https://app.shiprocket.in/",
  brief:"A shipping aggregator that lets online sellers compare couriers, book shipments and manage fulfilment from one dashboard. The Nipige integrates multiple carriers, automates label generation, NDR and returns, and offers the best rate per pin code. It is the logistics back-office for D2C and SME sellers.",
  use:"Give small sellers multi-courier shipping, tracking and returns from one dashboard.",
  ex:[["Shiprocket","India"],["ShipStation","USA"],["Sendy","Africa"],["Shipa","Middle East"]]},
-{i:37,cat:"Personal Finance Management",purpose:"Expense & budget tracking",cover:70,url:"https://walnutfinance.com/",
+{i:37,fam:"C",cat:"Personal Finance Management",purpose:"Expense & budget tracking",cover:70,url:"https://walnutfinance.com/",
  brief:"An app that helps individuals track spending, set budgets and gain insights into their financial habits. The Nipige reads transactions, auto-categorises expenses, sends bill reminders and visualises money flow. Behavioural insight and nudges build the habit, with lending or investing cross-sell as monetisation.",
  use:"Auto-track spending and nudge better habits, then cross-sell credit and investments.",
  ex:[["Walnut","India"],["Mint","USA"],["PiggyVest","Africa"],["Lune","Middle East"]]},
-{i:38,cat:"Dating",purpose:"Dating & social matching",cover:60,url:"https://tinder.com/",
+{i:38,fam:"E",cat:"Dating",purpose:"Dating & social matching",cover:60,url:"https://tinder.com/",
  brief:"A location-based dating app matching people by preferences via swipe-style discovery and chat. The Nipige handles profile verification, matching algorithms, safety features and premium visibility tiers. Network density in each city and trust/safety are the make-or-break factors; freemium-to-premium drives revenue.",
  use:"Build dense local dating networks monetised through premium visibility and boosts.",
  ex:[["Tinder","USA"],["Bumble","USA"],["Hawaya","Middle East"],["Vows","Africa"]]},
-{i:39,cat:"Housing",purpose:"Brokerage-free rentals",cover:65,url:"https://www.nobroker.in/",
+{i:39,fam:"S",cat:"Housing",purpose:"Brokerage-free rentals",cover:65,url:"https://www.nobroker.in/",
  brief:"A peer-to-peer rental platform connecting tenants and owners directly, eliminating brokerage. The Nipige verifies listings, enables direct chat, and layers paid services like rental agreements, packers, painting and home loans. Removing the broker fee is the sharp wedge; ancillary services fund the model.",
  use:"Cut out brokers with direct owner-tenant matching, monetised via rental add-on services.",
  ex:[["NoBroker","India"],["Zillow Rentals","USA"],["Lamudi","Africa"],["Bayut","Middle East"]]},
-{i:40,cat:"Legal Services",purpose:"Online legal services",cover:65,url:"https://www.legalzoom.com/",
+{i:40,fam:"S",cat:"Legal Services",purpose:"Online legal services",cover:65,url:"https://www.legalzoom.com/",
  brief:"A platform providing affordable legal documents, incorporation, trademarks and lawyer consultations online. The Nipige templatises common legal needs, matches users with attorneys, and manages filings and compliance. It democratises legal help for individuals and small businesses priced out of traditional firms.",
  use:"Make routine legal work (incorporation, contracts) self-serve and affordable for SMEs.",
  ex:[["LegalZoom","USA"],["Vakilsearch","India"],["Lawpadi","Africa"],["Legal Inz","Middle East"]]},
-{i:41,cat:"Gig Economy",purpose:"Gig worker marketplace",cover:65,url:"https://www.gig.com/",
+{i:41,fam:"S",cat:"Gig Economy",purpose:"Gig worker marketplace",cover:65,url:"https://www.gig.com/",
  brief:"A marketplace matching businesses with on-demand gig workers for short tasks and shifts. The Nipige handles worker profiles, skill matching, shift scheduling, payments and ratings. It gives flexible workers income access and gives businesses elastic, just-in-time staffing without permanent payroll.",
  use:"Match flexible workers to short shifts so businesses staff up on demand without payroll.",
  ex:[["Gig","Global"],["Wonolo","USA"],["Lynk","Africa"],["Ogram","Middle East"]]},
-{i:42,cat:"Job Portal",purpose:"Jobs & recruitment marketplace",cover:65,url:"https://www.naukri.com/",
+{i:42,fam:"E",cat:"Job Portal",purpose:"Jobs & recruitment marketplace",cover:65,url:"https://www.naukri.com/",
  brief:"A jobs marketplace aggregating openings, candidate profiles, recruiters and placement agents. The Nipige powers search, resume databases, applicant tracking and employer branding, monetising via recruiter subscriptions and featured postings. Two-sided liquidity of candidates and jobs is the moat.",
  use:"Aggregate candidates and openings, selling recruiter access and premium employer branding.",
  ex:[["Naukri","India"],["Indeed","USA"],["Jobberman","Africa"],["Bayt","Middle East"]]},
-{i:43,cat:"Social Media",purpose:"Social gathering & events",cover:65,url:"https://www.meetup.com/",
+{i:43,fam:"E",cat:"Social Media",purpose:"Social gathering & events",cover:65,url:"https://www.meetup.com/",
  brief:"A platform for organising and discovering local interest-based groups, events and meetups. The Nipige lets organisers create communities, schedule events, sell tickets and grow membership around shared interests. It monetises through organiser subscriptions and event fees while building real-world social capital.",
  use:"Turn shared interests into recurring real-world meetups with organiser subscriptions.",
  ex:[["Meetup","USA"],["Eventbrite","USA"],["Eventbrite Africa","Africa"],["Hayfa","Middle East"]]},
-{i:44,cat:"Restaurant Booking",purpose:"Table reservations",cover:75,url:"https://www.dineout.co.in/",
+{i:44,fam:"S",cat:"Restaurant Booking",purpose:"Table reservations",cover:75,url:"https://www.dineout.co.in/",
  brief:"A dining marketplace for discovering restaurants, booking tables and getting deals. The Nipige manages real-time table inventory, reservations, waitlists, prepaid offers and loyalty. It fills empty covers for restaurants and rewards diners with discounts, owning the going-out decision.",
  use:"Fill empty restaurant tables with reservations and prepaid deals that reward diners.",
  ex:[["Dineout","India"],["OpenTable","USA"],["EatOut","Africa"],["Reserveout","Middle East"]]},
-{i:45,cat:"D2C — Farm to Home",purpose:"Direct fresh meat & produce",cover:75,url:"https://www.licious.in/",
+{i:45,fam:"C",cat:"D2C — Farm to Home",purpose:"Direct fresh meat & produce",cover:75,url:"https://www.licious.in/",
  brief:"A direct-to-consumer brand delivering fresh meat, seafood and produce with cold-chain control. The Nipige owns sourcing, processing, quality assurance and last-mile cold delivery for a hygiene-sensitive category. Brand trust around freshness and safety commands premium pricing over wet markets.",
  use:"Win trust in fresh meat with owned cold-chain and brand-grade hygiene, at a premium.",
  ex:[["Licious","India"],["ButcherBox","USA"],["Eden Life","Africa"],["Meatonomics","Middle East"]]},
-{i:46,cat:"Advertise Listing",purpose:"Local business directory",cover:80,url:"https://www.justdial.com/",
+{i:46,fam:"E",cat:"Advertise Listing",purpose:"Local business directory",cover:80,url:"https://www.justdial.com/",
  brief:"A local search and business-listing directory where users find services and businesses pay to be discovered. The Nipige aggregates listings, reviews, contact and booking, monetising via paid listings, leads and ads. It is the yellow-pages-meets-search layer for local commerce.",
  use:"Aggregate local-business discovery and sell visibility plus qualified leads to merchants.",
  ex:[["JustDial","India"],["Yelp","USA"],["VConnect","Africa"],["Connect.ae","Middle East"]]},
-{i:47,cat:"Trip Reviews",purpose:"Places review & rating",cover:70,url:"https://www.tripadvisor.in/",
+{i:47,fam:"E",cat:"Trip Reviews",purpose:"Places review & rating",cover:70,url:"https://www.tripadvisor.in/",
  brief:"A travel reviews platform aggregating user ratings for hotels, restaurants and attractions, with booking links. The Nipige crowdsources reviews and photos, ranks places, and earns referral commissions from booking partners. Trustworthy crowd-reviews drive travel decisions and downstream bookings.",
  use:"Aggregate trusted traveller reviews and convert them into booking referral commissions.",
  ex:[["TripAdvisor","USA"],["Yelp","USA"],["SafariNow","Africa"],["Zomato UAE","Middle East"]]},
-{i:48,cat:"Employer Credibility",purpose:"Employer & employee ratings",cover:70,url:"https://www.glassdoor.co.in/",
+{i:48,fam:"E",cat:"Employer Credibility",purpose:"Employer & employee ratings",cover:70,url:"https://www.glassdoor.co.in/",
  brief:"A platform where employees anonymously review employers, share salaries and rate interviews. The Nipige crowdsources workplace transparency, combines it with job listings, and monetises via employer branding and recruiting tools. Honest insider signal is the unique asset attracting jobseekers.",
  use:"Crowdsource salary and workplace transparency to attract jobseekers and sell employer branding.",
  ex:[["Glassdoor","USA"],["Comparably","USA"],["Jobberman Insights","Africa"],["Bayt Reviews","Middle East"]]},
-{i:49,cat:"Room Aggregator",purpose:"Hotel & stay bookings",cover:70,url:"https://www.oyorooms.com/",
+{i:49,fam:"S",cat:"Room Aggregator",purpose:"Hotel & stay bookings",cover:70,url:"https://www.oyorooms.com/",
  brief:"A branded-budget-stay aggregator standardising independent hotels and homes under one quality promise. The Nipige onboards small hotels, enforces standards, manages pricing and distribution, and books guests through one trusted brand. It converts fragmented, unbranded supply into predictable, bookable inventory.",
  use:"Standardise scattered budget hotels under one trusted brand with predictable quality.",
  ex:[["OYO","India"],["Airbnb","USA"],["Hotels.ng","Africa"],["Tamara Stays","Middle East"]]},
-{i:50,cat:"Content Aggregator",purpose:"Content management & curation",cover:65,url:"https://yourstory.com/",
+{i:50,fam:"E",cat:"Content Aggregator",purpose:"Content management & curation",cover:65,url:"https://yourstory.com/",
  brief:"A content platform aggregating and publishing stories, news and resources around a theme or community. The Nipige curates, hosts and distributes long-form content, building an engaged audience monetised via ads, events, sponsorships and premium membership. Authority and audience trust are the assets.",
  use:"Build a themed media audience and monetise through ads, events and sponsored content.",
  ex:[["YourStory","India"],["Medium","USA"],["TechCabal","Africa"],["Wamda","Middle East"]]},
-{i:51,cat:"Language Learning",purpose:"Language learning app",cover:65,url:"https://www.duolingo.com/",
+{i:51,fam:"E",cat:"Language Learning",purpose:"Language learning app",cover:65,url:"https://www.duolingo.com/",
  brief:"A gamified app teaching languages through bite-sized, adaptive lessons. The Nipige uses streaks, levels and spaced repetition to keep learners engaged daily, with freemium-to-premium upgrades. Habit-forming gamification and free access drive scale, while subscriptions and ads monetise.",
  use:"Hook daily learners with gamified streaks, then upsell ad-free premium tiers.",
  ex:[["Duolingo","USA"],["Babbel","Germany"],["Kasahorow","Africa"],["Kaleela","Middle East"]]},
-{i:52,cat:"City Waste Management",purpose:"Waste management app",cover:80,url:"https://myecobin.in/",
+{i:52,fam:"S",cat:"City Waste Management",purpose:"Waste management app",cover:80,url:"https://myecobin.in/",
  brief:"A platform digitising household and commercial waste collection, segregation and recycling pickups. The Nipige schedules collection, tracks bins, rewards segregation, and connects waste to recyclers and scrap dealers. It brings accountability and circularity to urban sanitation while creating recycling supply.",
  use:"Digitise scheduled waste pickup and reward segregation to feed a recycling supply chain.",
  ex:[["EcoBins","India"],["Rubicon","USA"],["Wecyclers","Africa"],["RECAPP","Middle East"]]},
-{i:53,cat:"OTT & Streaming",purpose:"OTT streaming app",cover:65,url:"https://www.netflix.com/in/",
+{i:53,fam:"E",cat:"OTT & Streaming",purpose:"OTT streaming app",cover:65,url:"https://www.netflix.com/in/",
  brief:"A subscription video-on-demand platform streaming films, series and original content. The Nipige licenses and produces content, personalises recommendations, and streams across devices on a subscription model. A deep, exclusive content library plus great recommendations reduce churn.",
  use:"Retain subscribers with exclusive original content and personalised recommendations.",
  ex:[["Netflix","USA"],["ZEE5","India"],["Showmax","Africa"],["Shahid","Middle East"]]},
-{i:54,cat:"BI & Analytics",purpose:"Data visualization",cover:75,url:"https://www.qlik.com/",
+{i:54,fam:"S",cat:"BI & Analytics",purpose:"Data visualization",cover:75,url:"https://www.qlik.com/",
  brief:"A business-intelligence platform turning raw data into interactive dashboards and insights. The Nipige connects data sources, builds visualisations, enables self-serve analytics and embeds reporting for decision-makers. Ease of insight discovery and data governance drive enterprise adoption.",
  use:"Let non-technical teams self-serve dashboards and insights from connected data sources.",
  ex:[["Qlik","USA"],["Tableau","USA"],["Asoriba Analytics","Africa"],["Lucidya","Middle East"]]},
-{i:55,cat:"Subscription Billing — Cable TV",purpose:"Cable TV bill payment",cover:100,url:"https://cablepay.co.in/",
+{i:55,fam:"C",cat:"Subscription Billing — Cable TV",purpose:"Cable TV bill payment",cover:100,url:"https://cablepay.co.in/",
  brief:"A billing-and-payment platform for cable TV and local ISP operators to collect subscriptions digitally. The Nipige manages subscriber records, recurring billing, payment collection and reminders for fragmented local operators. It modernises cash-heavy cable collections into trackable digital recurring revenue.",
  use:"Digitise cash-based cable subscription collection into automated recurring billing.",
  ex:[["CablePay","India"],["Spectrum Pay","USA"],["DStv Pay","Africa"],["OSN Pay","Middle East"]]},
-{i:56,cat:"Clothing",purpose:"Online fashion marketplace",cover:95,url:"https://www.bewakoof.com/",
+{i:56,fam:"C",cat:"Clothing",purpose:"Online fashion marketplace",cover:95,url:"https://www.bewakoof.com/",
  brief:"An online apparel brand and marketplace selling trend-led, affordable fashion. The Nipige owns design, manufacturing, catalogue, sizing and fast fulfilment, riding social-media-driven trends. A distinctive brand voice and quick fashion cycles build a loyal young customer base.",
  use:"Ride social trends with fast, affordable in-house fashion and a sharp brand voice.",
  ex:[["Bewakoof","India"],["SHEIN","China"],["Zando","Africa"],["Namshi","Middle East"]]},
-{i:57,cat:"Jewellery",purpose:"Jewellery marketplace",cover:90,url:"https://www.bluestone.com/",
+{i:57,fam:"C",cat:"Jewellery",purpose:"Jewellery marketplace",cover:90,url:"https://www.bluestone.com/",
  brief:"An online jewellery brand selling certified gold and diamond pieces with try-at-home and lifetime exchange. The Nipige handles design, certification, customisation, secure delivery and buy-back, building trust in a high-value, trust-sensitive category. Certification and easy returns de-risk online jewellery buying.",
  use:"Build trust in high-value online jewellery via certification, try-at-home and buy-back.",
  ex:[["BlueStone","India"],["Blue Nile","USA"],["Adoraa","Africa"],["Damas Online","Middle East"]]},
-{i:58,cat:"Babycare",purpose:"Baby & kids products",cover:95,url:"https://www.firstcry.com/",
+{i:58,fam:"C",cat:"Babycare",purpose:"Baby & kids products",cover:95,url:"https://www.firstcry.com/",
  brief:"An online store for newborn, baby and kids products spanning diapers, toys, clothing and gear. The Nipige offers wide selection, parenting content, loyalty and offline stores, becoming the go-to for parents through every growth stage. Recurring consumables and stage-based needs build long lifetime value.",
  use:"Capture parents early and grow with the child through recurring, stage-based purchases.",
  ex:[["FirstCry","India"],["buybuy BABY","USA"],["MumsVillage","Africa"],["Mumzworld","Middle East"]]},
-{i:59,cat:"Deals & Coupon Aggregator",purpose:"Discounts & coupons",cover:75,url:"https://www.coupondunia.in/",
+{i:59,fam:"C",cat:"Deals & Coupon Aggregator",purpose:"Discounts & coupons",cover:75,url:"https://www.coupondunia.in/",
  brief:"A platform aggregating discount codes, cashback and deals across e-commerce sites. The Nipige curates verified offers, tracks cashback, and earns affiliate commissions when users shop through it. It sits at the bottom of the purchase funnel, monetising intent to save.",
  use:"Capture bargain-hunters at checkout and earn affiliate revenue on cashback-driven purchases.",
  ex:[["CouponDunia","India"],["Honey","USA"],["DealDey","Africa"],["Almowafir","Middle East"]]},
-{i:60,cat:"Personalised Gifts",purpose:"Custom gifting",cover:85,url:"https://www.yoursurprise.com/",
+{i:60,fam:"C",cat:"Personalised Gifts",purpose:"Custom gifting",cover:85,url:"https://www.yoursurprise.com/",
  brief:"A marketplace for personalised gifts — printed, engraved or custom-made for occasions. The Nipige offers design tools, print-on-demand fulfilment and occasion reminders, turning emotion into custom products. Personalisation commands premium margins and repeat gifting through life events.",
  use:"Turn occasions into premium custom gifts with design tools and occasion reminders.",
  ex:[["YourSurprise","Netherlands"],["Zoomin","India"],["Gifted.ng","Africa"],["Joi Gifts","Middle East"]]},
-{i:61,cat:"Audio Streaming",purpose:"Podcasts & audiobooks",cover:65,url:"https://kukufm.com/",
+{i:61,fam:"E",cat:"Audio Streaming",purpose:"Podcasts & audiobooks",cover:65,url:"https://kukufm.com/",
  brief:"An audio platform streaming podcasts, audiobooks and audio shows, often in regional languages. The Nipige produces and licenses audio content, personalises discovery, and monetises via subscriptions and ads. Regional-language original audio unlocks underserved listeners on the go.",
  use:"Serve underserved regional-language listeners with original audio on a subscription model.",
  ex:[["Kuku FM","India"],["Spotify","Sweden"],["AfricaPodfest","Africa"],["Anghami","Middle East"]]},
-{i:62,cat:"Fintech Lending",purpose:"Online credit provider",cover:75,url:"https://www.gopaysense.com/",
+{i:62,fam:"C",cat:"Fintech Lending",purpose:"Online credit provider",cover:75,url:"https://www.gopaysense.com/",
  brief:"A digital lender offering instant personal loans and credit lines via app-based underwriting. The Nipige automates KYC, alternative-data credit scoring, disbursal and collections. Speed and access for the underbanked are the wedge; risk-managed underwriting is the discipline that sustains it.",
  use:"Offer instant, app-based credit to the underbanked using alternative-data underwriting.",
  ex:[["PaySense","India"],["Affirm","USA"],["Branch","Africa"],["Tabby","Middle East"]]},
-{i:63,cat:"Wedding Planning",purpose:"Wedding planning & vendors",cover:90,url:"https://www.theknot.com/",
+{i:63,fam:"S",cat:"Wedding Planning",purpose:"Wedding planning & vendors",cover:90,url:"https://www.theknot.com/",
  brief:"A platform helping couples plan weddings — vendors, budgets, guest lists, registries and payments. The Nipige aggregates venues, photographers, caterers and decorators, with planning tools and reviews. It organises a high-spend, once-in-a-lifetime project while monetising vendor leads.",
  use:"Organise high-spend wedding planning end to end and monetise vendor lead generation.",
  ex:[["The Knot","USA"],["WedMeGood","India"],["FindMyVenue","Africa"],["MarryBaby","Middle East"]]},
-{i:64,cat:"Co-working Space Management",purpose:"Co-working management",cover:85,url:"https://nexdax.com/",
+{i:64,fam:"S",cat:"Co-working Space Management",purpose:"Co-working management",cover:85,url:"https://nexdax.com/",
  brief:"A platform to manage and book co-working and flexible office space — desks, meeting rooms and memberships. The Nipige handles space inventory, bookings, access control, billing and community. It maximises utilisation for operators and gives members frictionless flexible workspace access.",
  use:"Maximise desk utilisation with bookings, access control and member billing in one app.",
  ex:[["Nexdax","India"],["WeWork","USA"],["Workstyle Africa","Africa"],["Astrolabs","Middle East"]]},
-{i:65,cat:"Crowdfunding",purpose:"Project crowdfunding",cover:80,url:"https://www.kickstarter.com/",
+{i:65,fam:"C",cat:"Crowdfunding",purpose:"Project crowdfunding",cover:80,url:"https://www.kickstarter.com/",
  brief:"A crowdfunding marketplace where creators raise money from backers to bring projects to life. The Nipige hosts campaigns, processes pledges, manages rewards tiers, and takes a platform fee on funds raised. Community validation plus all-or-nothing funding aligns creators and backers.",
  use:"Let creators validate and fund projects via backer pledges, earning a platform fee.",
  ex:[["Kickstarter","USA"],["Ketto","India"],["Thundafund","Africa"],["Eureeca","Middle East"]]},
-{i:66,cat:"Lead-gen Marketplace",purpose:"Local search & deals",cover:90,url:"https://www.justdial.com/",
+{i:66,fam:"E",cat:"Lead-gen Marketplace",purpose:"Local search & deals",cover:90,url:"https://www.justdial.com/",
  brief:"A local search engine offering deals, online shopping and bookings for flights, hotels, movies, buses and cabs. The Nipige aggregates services and generates qualified leads for local businesses, monetising via paid listings and lead fees. Breadth of local intent makes it a one-stop discovery hub.",
  use:"Aggregate broad local intent and sell qualified leads across many service verticals.",
  ex:[["JustDial","India"],["Yelp","USA"],["VConnect","Africa"],["Connect.ae","Middle East"]]},
-{i:67,cat:"Used-Car Dealer Aggregation",purpose:"Second-hand cars",cover:80,url:"https://www.cars24.com/",
+{i:67,fam:"C",cat:"Used-Car Dealer Aggregation",purpose:"Second-hand cars",cover:80,url:"https://www.cars24.com/",
  brief:"A platform to buy and sell used cars with inspection, fair pricing, paperwork and instant payment. The Nipige runs multi-point inspections, transparent valuation, financing and warranty, removing the trust gap in used-car deals. Owning inventory and certification builds buyer confidence.",
  use:"Remove the trust gap in used cars with inspection, instant payment and certified resale.",
  ex:[["Cars24","India"],["Carvana","USA"],["Cars45","Africa"],["CarSwitch","Middle East"]]},
-{i:68,cat:"Carpooling & Ride-sharing",purpose:"Carpooling aggregation",cover:85,url:"https://www.lyft.com/",
+{i:68,fam:"S",cat:"Carpooling & Ride-sharing",purpose:"Carpooling aggregation",cover:85,url:"https://www.lyft.com/",
  brief:"A ride-sharing and carpooling platform matching drivers with passengers heading the same way. The Nipige handles route matching, cost-splitting, payments and ratings, cutting commute costs and congestion. Density of overlapping routes determines match quality and savings.",
  use:"Match commuters on overlapping routes to split costs and cut congestion.",
  ex:[["Lyft","USA"],["BlaBlaCar","France"],["SWVL","Africa"],["Careem Carpool","Middle East"]]},
-{i:69,cat:"Rewards",purpose:"Loyalty & rewards",cover:90,url:"https://www.easyrewardz.com/",
+{i:69,fam:"E",cat:"Rewards",purpose:"Loyalty & rewards",cover:90,url:"https://www.easyrewardz.com/",
  brief:"A loyalty platform letting brands run points, tiers and rewards programmes across channels. The Nipige manages customer data, points accrual/redemption, personalised offers and analytics. It deepens retention for merchants and gives shoppers consolidated, redeemable value across brands.",
  use:"Power cross-brand loyalty programmes that lift retention and consolidate shopper rewards.",
  ex:[["Easyrewardz","India"],["Smile.io","Canada"],["Zumi","Africa"],["Maly","Middle East"]]},
-{i:70,cat:"Books",purpose:"Online book sales & discovery",cover:95,url:"https://www.bookbub.com/",
+{i:70,fam:"C",cat:"Books",purpose:"Online book sales & discovery",cover:95,url:"https://www.bookbub.com/",
  brief:"A book discovery and deals platform recommending titles and discounted e-books to readers. The Nipige personalises recommendations, surfaces limited-time deals, and drives sales for authors and retailers via affiliate links. Personalised discovery solves the find-your-next-read problem at scale.",
  use:"Drive book discovery with personalised deal alerts that convert readers into buyers.",
  ex:[["BookBub","USA"],["Goodreads","USA"],["OkadaBooks","Africa"],["Jamalon","Middle East"]]},
-{i:71,cat:"Transport / Porter Service",purpose:"Intercity & local logistics",cover:90,url:"https://porter.in/",
+{i:71,fam:"S",cat:"Transport / Porter Service",purpose:"Intercity & local logistics",cover:90,url:"https://porter.in/",
  brief:"An on-demand logistics platform for moving goods — mini-trucks, two-wheelers and porters for local and intercity hauls. The Nipige matches loads with vehicles, prices transparently, tracks live, and serves SMEs and individuals. It formalises the unorganised goods-transport market with instant booking.",
  use:"Match goods with the right vehicle on demand, formalising local cargo transport.",
  ex:[["Porter","India"],["Lalamove","Hong Kong"],["Lori Systems","Africa"],["Trukker","Middle East"]]},
-{i:72,cat:"Recipe Aggregation",purpose:"Recipes & meal discovery",cover:90,url:"https://www.yummly.com/",
+{i:72,fam:"E",cat:"Recipe Aggregation",purpose:"Recipes & meal discovery",cover:90,url:"https://www.yummly.com/",
  brief:"A recipe discovery platform recommending dishes via search and personalised suggestions, with smart shopping lists. The Nipige aggregates recipes, matches them to dietary preferences and pantry, and links to grocery purchase. Personalised meal planning bridges inspiration and ingredient commerce.",
  use:"Turn recipe inspiration into grocery baskets with personalised meal planning.",
  ex:[["Yummly","USA"],["Allrecipes","USA"],["Sisi Jemimah","Africa"],["Matbakhi","Middle East"]]},
-{i:73,cat:"Arts & Crafts Marketplace",purpose:"Skills & craft learning",cover:95,url:"https://www.craftsy.com/",
+{i:73,fam:"E",cat:"Arts & Crafts Marketplace",purpose:"Skills & craft learning",cover:95,url:"https://www.craftsy.com/",
  brief:"A marketplace for craft and hobby learning — classes, patterns, kits and supplies. The Nipige hosts video courses, sells materials, and builds a maker community around skills like quilting, baking and painting. Content plus commerce (learn then buy supplies) compounds engagement.",
  use:"Teach a craft, then sell the kits and supplies learners need to practise it.",
  ex:[["Craftsy","USA"],["Skillshare","USA"],["Afrikrea","Africa"],["Hunarmand","Middle East"]]},
-{i:74,cat:"Content Aggregation — News",purpose:"News & content aggregator",cover:85,url:"https://dailyhunt.in/",
+{i:74,fam:"E",cat:"Content Aggregation — News",purpose:"News & content aggregator",cover:85,url:"https://dailyhunt.in/",
  brief:"A news aggregator delivering content from many publishers and languages in a personalised feed. The Nipige licenses publisher content, personalises by interest and language, and monetises through ads. Multilingual breadth and a smart feed make it the default news habit for diverse audiences.",
  use:"Aggregate multilingual news into one personalised feed monetised by advertising.",
  ex:[["Dailyhunt","India"],["Google News","USA"],["Opera News","Africa"],["Almatsah","Middle East"]]},
-{i:75,cat:"Crypto Aggregation",purpose:"Crypto exchange",cover:75,url:"https://accounts.binance.com/",
+{i:75,fam:"C",cat:"Crypto Aggregation",purpose:"Crypto exchange",cover:75,url:"https://accounts.binance.com/",
  brief:"A cryptocurrency exchange where users buy, sell, trade and store digital assets. The Nipige provides order matching, wallets, security, fiat on-ramps and a range of trading products. Liquidity, security and regulatory compliance determine trust and trading volume.",
  use:"Provide secure, liquid crypto trading with fiat on-ramps for retail and pro traders.",
  ex:[["Binance","Global"],["Coinbase","USA"],["Yellow Card","Africa"],["Rain","Middle East"]]},
-{i:76,cat:"Barber Aggregation",purpose:"Salon & barber booking",cover:95,url:"https://barberfinder.co.uk/",
+{i:76,fam:"S",cat:"Barber Aggregation",purpose:"Salon & barber booking",cover:95,url:"https://barberfinder.co.uk/",
  brief:"An app-based booking platform for salons and barbershops with real-time availability. The Nipige lets shops list services, manage calendars and accept bookings, while clients discover and book nearby slots. It fills empty chairs for small shops and removes call-and-wait friction for clients.",
  use:"Fill empty barber chairs with real-time online booking and discovery.",
  ex:[["BarberFinder","UK"],["Booksy","USA"],["Salon Africa","Africa"],["Fresha MENA","Middle East"]]},
-{i:77,cat:"Virtual Creative Workshops",purpose:"Creative idea workshops",cover:80,url:"https://creativityworkshop.com/",
+{i:77,fam:"E",cat:"Virtual Creative Workshops",purpose:"Creative idea workshops",cover:80,url:"https://creativityworkshop.com/",
  brief:"A platform hosting virtual creative workshops to generate and explore ideas for individuals and teams. The Nipige provides facilitated sessions, collaboration tools and exercises that unlock creativity. It serves corporates and creatives seeking structured ideation, monetised via session and cohort fees.",
  use:"Run facilitated virtual ideation workshops for teams, sold as cohorts or corporate sessions.",
  ex:[["Creativity Workshop","USA"],["Domestika","Spain"],["GeniusU Africa","Africa"],["Tasattuf","Middle East"]]},
-{i:78,cat:"Freelancers",purpose:"Freelance services marketplace",cover:85,url:"https://www.upwork.com/",
+{i:78,fam:"S",cat:"Freelancers",purpose:"Freelance services marketplace",cover:85,url:"https://www.upwork.com/",
  brief:"A marketplace connecting businesses with freelancers for IT, design, writing and professional work. The Nipige handles profiles, proposals, escrow payments, milestones and ratings, building trust between remote parties. Global talent access plus secure payment make remote hiring frictionless.",
  use:"Connect businesses with vetted global freelancers via escrow-secured project hiring.",
  ex:[["Upwork","USA"],["Fiverr","Israel"],["Asuqu","Africa"],["Ureed","Middle East"]]},
-{i:79,cat:"Digital Advertising Services",purpose:"Digital marketing & AI consulting",cover:90,url:"https://adtechhub.com/",
+{i:79,fam:"S",cat:"Digital Advertising Services",purpose:"Digital marketing & AI consulting",cover:90,url:"https://adtechhub.com/",
  brief:"A platform offering digital marketing and AI-driven advertising technology services to businesses. The Nipige bundles campaign management, ad-tech tooling, analytics and consulting, helping brands optimise spend. Outcome-driven performance and AI optimisation differentiate it from generic agencies.",
  use:"Help brands optimise ad spend with AI-driven ad-tech tooling and performance consulting.",
  ex:[["AdTechHub","Global"],["The Trade Desk","USA"],["Terragon","Africa"],["Digital Falcon","Middle East"]]},
-{i:80,cat:"Political App",purpose:"Party & voter connect",cover:85,url:"https://itdpblog.com/",
+{i:80,fam:"E",cat:"Political App",purpose:"Party & voter connect",cover:85,url:"https://itdpblog.com/",
  brief:"A platform connecting a political party with voters — sharing agenda, gathering feedback and mobilising volunteers. The Nipige distributes content, runs surveys, coordinates ground teams and tracks sentiment. It digitises grassroots political engagement and two-way voter communication.",
  use:"Digitise grassroots political engagement — agenda broadcast, feedback and volunteer mobilisation.",
  ex:[["Mana TDP","India"],["NationBuilder","USA"],["Shine Your Eye","Africa"],["Meedan","Middle East"]]},
-{i:81,cat:"Courier Aggregator",purpose:"Drop-shipping & courier",cover:85,url:"https://www.shiprocket.in/",
+{i:81,fam:"S",cat:"Courier Aggregator",purpose:"Drop-shipping & courier",cover:85,url:"https://www.shiprocket.in/",
  brief:"A courier aggregation platform enabling sellers to ship via multiple carriers with the best rates and tracking. The Nipige automates carrier selection, label printing, tracking, NDR and returns for online businesses. It is the shipping backbone that lets small sellers scale fulfilment cheaply.",
  use:"Let online sellers ship through many couriers at best rates from one panel.",
  ex:[["Shiprocket","India"],["Shippo","USA"],["Sendbox","Africa"],["Shipa","Middle East"]]},
-{i:82,cat:"Musical Instruments",purpose:"Instruments & pro audio",cover:95,url:"https://www.bajaao.com/",
+{i:82,fam:"C",cat:"Musical Instruments",purpose:"Instruments & pro audio",cover:95,url:"https://www.bajaao.com/",
  brief:"An online retailer for musical instruments, pro-audio and studio equipment with expert guidance. The Nipige offers wide selection, gear advice, EMI, and community for musicians, blending specialist commerce with content. Expertise and authentic gear build trust with serious buyers.",
  use:"Serve musicians with curated gear, expert advice and financing in a specialist store.",
  ex:[["Bajaao","India"],["Sweetwater","USA"],["MusicWorld Africa","Africa"],["Melody House","Middle East"]]},
-{i:83,cat:"Astrology",purpose:"Astrology & gems",cover:null,url:"https://www.astrosage.com/",
+{i:83,fam:"E",cat:"Astrology",purpose:"Astrology & gems",cover:null,url:"https://www.astrosage.com/",
  brief:"An astrology platform offering horoscopes, kundli matching, consultations and remedial products like gems. The Nipige generates personalised charts, connects users with astrologers for paid consults, and sells related products. Belief-driven engagement and recurring consultations fuel monetisation.",
  use:"Monetise belief-driven engagement via paid astrologer consults and remedial product sales.",
  ex:[["AstroSage","India"],["Co–Star","USA"],["Africa Astrology","Africa"],["Abraj","Middle East"]]},
-{i:84,cat:"Temples / Prasad",purpose:"Faith offerings delivery",cover:95,url:"https://onlineprasad.com/",
+{i:84,fam:"E",cat:"Temples / Prasad",purpose:"Faith offerings delivery",cover:95,url:"https://onlineprasad.com/",
  brief:"A spiritual platform delivering blessed prasad and offerings from places of worship to devotees' homes. The Nipige coordinates with temples, handles rituals-on-behalf, packaging and delivery, serving devotees who can't visit in person. Faith and authenticity of the tie-up are the trust drivers.",
  use:"Bring temple prasad and rituals to distant devotees who can't visit in person.",
  ex:[["OnlinePrasad","India"],["Sri Mandir","India"],["Faith Africa","Africa"],["Zakat Online","Middle East"]]},
-{i:85,cat:"Church Services",purpose:"Faith community services",cover:95,url:"https://cnisynod.org/",
+{i:85,fam:"E",cat:"Church Services",purpose:"Faith community services",cover:95,url:"https://cnisynod.org/",
  brief:"A platform digitising faith-community services — service schedules, donations, events, sermons and member communication. The Nipige connects congregations, enables online giving and livestreams, and coordinates community programmes. It modernises faith-community administration and engagement.",
  use:"Digitise congregation engagement — schedules, online giving, livestreams and member outreach.",
  ex:[["CNI Synod","India"],["Pushpay","USA"],["Asoriba","Africa"],["Muslim Pro","Middle East"]]},
-{i:86,cat:"Club Membership",purpose:"Club membership management",cover:95,url:"https://www.bangaloreclub.com/",
+{i:86,fam:"E",cat:"Club Membership",purpose:"Club membership management",cover:95,url:"https://www.bangaloreclub.com/",
  brief:"A platform managing private club memberships — bookings, billing, events, dining and facility access. The Nipige digitises member records, reservations, dues and communications for heritage and social clubs. It modernises operations and member experience for legacy institutions.",
  use:"Modernise legacy club operations — member billing, facility bookings and event management.",
  ex:[["Bangalore Club","India"],["ClubExpress","USA"],["Lagos Country Club","Africa"],["Capital Club","Middle East"]]},
-{i:87,cat:"NFT Aggregator",purpose:"NFT minting & marketplace",cover:90,url:"https://superrare.com/",
+{i:87,fam:"C",cat:"NFT Aggregator",purpose:"NFT minting & marketplace",cover:90,url:"https://superrare.com/",
  brief:"A marketplace where artists mint digital creations as NFTs and collectors buy, sell and trade them. The Nipige handles minting, wallet integration, auctions, royalties and provenance on-chain. Curation, authenticity and creator royalties define value in digital art.",
  use:"Let digital artists mint and sell NFTs with on-chain provenance and ongoing royalties.",
  ex:[["SuperRare","USA"],["OpenSea","USA"],["Afen","Africa"],["YellowHeart MENA","Middle East"]]},
-{i:88,cat:"IoT Data Aggregation",purpose:"IoT device management",cover:65,url:"https://www.merakhata.com/",
+{i:88,fam:"S",cat:"IoT Data Aggregation",purpose:"IoT device management",cover:65,url:"https://www.merakhata.com/",
  brief:"A platform for managing, monitoring and controlling IoT devices and systems across an organisation. The Nipige ingests device data, visualises telemetry, sets alerts and automates control across diverse hardware. Unified management of heterogeneous devices is the enterprise value.",
  use:"Unify monitoring and control of diverse IoT devices into one management layer.",
  ex:[["AggreGate","Global"],["Particle","USA"],["Gricd","Africa"],["IoT Squared","Middle East"]]},
-{i:89,cat:"Tax Assurance",purpose:"Accounting, tax & compliance",cover:80,url:"https://merakhata.com/",
+{i:89,fam:"S",cat:"Tax Assurance",purpose:"Accounting, tax & compliance",cover:80,url:"https://merakhata.com/",
  brief:"A one-stop platform for SME services — accounting, taxation, legal and fundraising support. The Nipige bundles compliance, bookkeeping and advisory through a network of professionals, simplifying back-office for small businesses. Bundled, affordable expertise is the draw for under-resourced SMEs.",
  use:"Bundle accounting, tax and legal compliance into one affordable SME back-office service.",
  ex:[["Merakhata","India"],["Bench","USA"],["Kippa","Africa"],["Wafeq","Middle East"]]},
-{i:90,cat:"Diagnostic Services",purpose:"Diagnostic lab aggregator",cover:95,url:"https://www.labsadvisor.com/",
+{i:90,fam:"S",cat:"Diagnostic Services",purpose:"Diagnostic lab aggregator",cover:95,url:"https://www.labsadvisor.com/",
  brief:"An online platform aggregating diagnostic services from multiple labs and centres. The Nipige lets patients compare tests and prices, book home sample collection, and get digital reports. Price transparency and convenience in a fragmented, opaque diagnostics market drive bookings.",
  use:"Bring price transparency and home sample collection to fragmented diagnostic testing.",
  ex:[["LabsAdvisor","India"],["LabCorp","USA"],["54gene","Africa"],["Rology","Middle East"]]},
-{i:91,cat:"Lawyers Service",purpose:"Legal help marketplace",cover:90,url:"https://www.legalindia.com/",
+{i:91,fam:"S",cat:"Lawyers Service",purpose:"Legal help marketplace",cover:90,url:"https://www.legalindia.com/",
  brief:"A platform giving individuals and businesses access to lawyers for everyday legal issues. The Nipige matches users with verified advocates by specialisation, manages consultations and documentation, and tracks cases. Affordable, accessible legal help for common disputes is the core promise.",
  use:"Connect individuals and SMEs to specialised lawyers for everyday legal problems.",
  ex:[["LegalIndia","India"],["Avvo","USA"],["Lawyard","Africa"],["Legal Inz","Middle East"]]},
-{i:92,cat:"Dealer Network Aggregator",purpose:"B2B trade marketplace",cover:90,url:"https://www.tradeindia.com/",
+{i:92,fam:"C",cat:"Dealer Network Aggregator",purpose:"B2B trade marketplace",cover:90,url:"https://www.tradeindia.com/",
  brief:"A B2B marketplace where businesses expand reach, find buyers or suppliers, and promote products. The Nipige hosts company catalogues, generates trade leads, verifies sellers and facilitates inquiries. A digital trade hub connecting manufacturers, exporters and distributors at scale.",
  use:"Connect manufacturers and buyers in a digital trade hub, monetising verified seller leads.",
  ex:[["TradeIndia","India"],["Alibaba","China"],["Tradedepot","Africa"],["Tradeling","Middle East"]]},
-{i:93,cat:"Money Transfer",purpose:"Cross-border remittance",cover:75,url:"https://www.remitly.com/",
+{i:93,fam:"C",cat:"Money Transfer",purpose:"Cross-border remittance",cover:75,url:"https://www.remitly.com/",
  brief:"A remittance platform letting individuals send money across borders quickly and securely. The Nipige handles compliance, FX, multiple payout methods and instant transfers, serving migrants sending money home. Speed, low fees and reliable delivery determine loyalty in remittances.",
  use:"Let migrants send money home fast and cheap with reliable cross-border delivery.",
  ex:[["Remitly","USA"],["Wise","UK"],["Chipper Cash","Africa"],["Denarii","Middle East"]]},
-{i:94,cat:"Cloud POS",purpose:"Point-of-sale system",cover:95,url:"https://squareup.com/",
+{i:94,fam:"S",cat:"Cloud POS",purpose:"Point-of-sale system",cover:95,url:"https://squareup.com/",
  brief:"A cloud point-of-sale platform turning phones, tablets and computers into full POS systems. The Nipige provides payment acceptance, inventory, sales analytics, and add-on financial services for merchants. Easy hardware-light setup plus a financial-services ecosystem lock in small merchants.",
  use:"Turn any device into a merchant POS, then layer on payments, inventory and lending.",
  ex:[["Square","USA"],["Pine Labs","India"],["Nomba","Africa"],["Foodics","Middle East"]]},
-{i:95,cat:"Buy Liquor Online",purpose:"Online liquor delivery",cover:100,url:"https://myliquorhub.com/",
+{i:95,fam:"C",cat:"Buy Liquor Online",purpose:"Online liquor delivery",cover:100,url:"https://myliquorhub.com/",
  brief:"A platform for ordering liquor, wine and mixers online with age verification and delivery. The Nipige aggregates licensed retailers, verifies age and compliance, and manages delivery within regulatory limits. Navigating tight regulation while offering convenience is the core challenge and moat.",
  use:"Offer compliant, age-verified liquor delivery by aggregating licensed retailers.",
  ex:[["LiquorHub","India"],["Drizly","USA"],["The Bottle Store","Africa"],["African+Eastern","Middle East"]]},
-{i:96,cat:"Stadium Aggregator",purpose:"Live-event ticketing",cover:80,url:"https://www.stubhub.com/",
+{i:96,fam:"E",cat:"Stadium Aggregator",purpose:"Live-event ticketing",cover:80,url:"https://www.stubhub.com/",
  brief:"A global ticketing marketplace for concerts, sports, theatre and live entertainment, including resale. The Nipige connects primary and secondary ticket supply with fans, guaranteeing valid tickets and fair pricing. Trust in resale authenticity and broad event coverage drive volume.",
  use:"Connect fans with primary and resale event tickets under a validity guarantee.",
  ex:[["StubHub","USA"],["Ticketmaster","USA"],["Tixsa","Africa"],["Platinumlist","Middle East"]]},
-{i:97,cat:"Farm to Home D2C",purpose:"Direct-from-farm produce",cover:95,url:"https://freshfolds.co.uk/",
+{i:97,fam:"C",cat:"Farm to Home D2C",purpose:"Direct-from-farm produce",cover:95,url:"https://freshfolds.co.uk/",
  brief:"A direct-to-consumer service delivering fresh produce straight from farms to homes. The Nipige shortens the supply chain, ensures freshness and fair farmer pay, and runs subscription veg/fruit boxes. Traceability and freshness command a premium while improving farmer margins.",
  use:"Shorten the farm-to-table chain with fresh, traceable produce boxes on subscription.",
  ex:[["FreshFolds","UK"],["Imperfect Foods","USA"],["Twiga Foods","Africa"],["Barakat Fresh","Middle East"]]},
-{i:98,cat:"Peer to Peer App",purpose:"Goods & services exchange",cover:90,url:"https://kolkata.craigslist.org/",
+{i:98,fam:"C",cat:"Peer to Peer App",purpose:"Goods & services exchange",cover:90,url:"https://kolkata.craigslist.org/",
  brief:"A peer-to-peer classifieds platform for exchanging goods and services online within a locality. The Nipige hosts free listings across categories — jobs, housing, items, services — and connects local buyers and sellers. Simplicity, breadth and local liquidity are the enduring strengths.",
  use:"Provide a simple, broad local board where anyone can exchange goods, services and jobs.",
  ex:[["Craigslist","USA"],["OLX","India"],["Jiji","Africa"],["Dubizzle","Middle East"]]},
-{i:99,cat:"IT Services / Hardware",purpose:"IT & electronics retail",cover:75,url:"https://www.newegg.com/",
+{i:99,fam:"C",cat:"IT Services / Hardware",purpose:"IT & electronics retail",cover:75,url:"https://www.newegg.com/",
  brief:"An online retailer specialising in computer hardware, electronics and IT components. The Nipige offers deep technical catalogues, build guides, reviews and competitive pricing for enthusiasts and businesses. Specialist depth and tech-savvy community trust differentiate it from generalists.",
  use:"Serve tech enthusiasts and IT buyers with deep hardware catalogues and build guidance.",
  ex:[["Newegg","USA"],["MD Computers","India"],["Yudala","Africa"],["Sharaf DG","Middle East"]]},
-{i:100,cat:"Fintech — Recharges",purpose:"Recharges & utility payments",cover:70,url:"https://www.mobikwik.com/",
+{i:100,fam:"C",cat:"Fintech — Recharges",purpose:"Recharges & utility payments",cover:70,url:"https://www.mobikwik.com/",
  brief:"A fintech app for mobile recharges, utility bill payments and a digital wallet. The Nipige enables fast prepaid recharges, automated bills, wallet payments and cross-sells credit and insurance. High-frequency recharge use builds the habit that funnels into broader financial products.",
  use:"Use frequent recharges and bill pay to build a wallet habit and cross-sell credit.",
  ex:[["MobiKwik","India"],["Paytm","India"],["OPay","Africa"],["Fawry","Middle East"]]},
-{i:101,cat:"Loyalty App",purpose:"Digital stamp & points wallet",cover:90,url:"https://www.fivestars.com/",
+{i:101,fam:"E",cat:"Loyalty App",purpose:"Digital stamp & points wallet",cover:90,url:"https://www.fivestars.com/",
  brief:"A consumer-facing loyalty app that replaces paper punch-cards with one digital wallet of stamps, points and rewards across many local merchants — cafés, salons, gyms, retailers. The Nipige lets small businesses launch a branded loyalty programme in minutes, runs check-ins, auto-issues points, and pushes targeted offers to bring customers back. Shoppers carry every shop's rewards in a single app instead of a drawer of cards, while merchants gain repeat visits and a marketing channel they could never build alone.",
  use:"Replace scattered paper punch-cards with one rewards wallet that drives repeat visits to local merchants.",
  ex:[["EasyRewards","India"],["Fivestars","USA"],["Zumi","Africa"],["Maly","Middle East"]]},
-{i:102,cat:"Coach Management App",purpose:"Coaching business OS",cover:85,url:"https://www.trainerize.com/",
+{i:102,fam:"S",cat:"Coach Management App",purpose:"Coaching business OS",cover:85,url:"https://www.trainerize.com/",
  brief:"An all-in-one business app for independent coaches, trainers and instructors to run their practice from one place. The Nipige lets a coach sell recurring memberships and class packages, take session and slot bookings against a live calendar, issue tickets for workshops, bootcamps and events, and launch promotions, discount codes and referral campaigns to fill empty slots. It bundles payments, client management, reminders and analytics so solo coaches and small studios can operate like a full team without juggling separate tools.",
  use:"Give independent coaches one app to sell subscriptions, take bookings, ticket events and run promotions.",
  ex:[["Trainerize","India"],["Mindbody","USA"],["OneFitStop","Africa"],["Hapana","Middle East"]]}
 ];
 
+const META = {
+1:{p:[["Busy household shopper","Wants groceries delivered in tight time slots"],["Kirana / dark-store owner","Needs an online channel and demand"],["Last-mile rider","Earns per delivery on flexible shifts"]],f:["Real-time inventory & slot booking","Recurring/subscription baskets","Rider dispatch & live tracking","Multi-store catalogue aggregation","Freshness & substitution handling"]},
+2:{p:[["Time-poor shopper","Mixes carts across several stores"],["Supermarket chain","Goes online without own logistics"],["Personal shopper","Picks & delivers for commission"]],f:["Multi-retailer catalogue compare","Personal-shopper assignment","Commission & delivery-fee billing","Cart-splitting across stores","Retailer onboarding portal"]},
+3:{p:[["Daily commuter","Needs a reliable cashless ride"],["Independent car owner","Monetises an idle vehicle"],["Fleet operator","Manages drivers at scale"]],f:["GPS matching & dispatch","Dynamic / surge pricing","In-app payments & wallet","Driver & rider ratings","ETA and route optimisation"]},
+4:{p:[["Chronic-care patient","Reorders medicines regularly"],["Licensed pharmacy","Gets digital order flow"],["Caregiver","Manages a family member's meds"]],f:["Prescription upload & verification","Refill reminders & auto-reorder","Drug-interaction flags","Tele-consult add-on","Pharmacy aggregation & delivery"]},
+6:{p:[["Patient seeking care","Books the right doctor fast"],["Doctor / clinic","Fills idle appointment slots"],["Hospital admin","Manages multi-doctor calendars"]],f:["Specialty & location search","In-clinic & video booking","Provider calendar management","Digital records & e-prescriptions","Reviews & ratings"]},
+7:{p:[["Homeowner renovating","Wants design with accountable execution"],["Interior designer","Gets scaled client demand"],["Modular-furniture factory","Receives steady orders"]],f:["3D design & visualisation","Transparent itemised quotes","Project & milestone tracking","Warranty-backed execution","Vendor/installer network"]},
+8:{p:[["Exam aspirant","Learns from top educators remotely"],["Star educator","Scales reach beyond one classroom"],["Parent","Tracks a child's progress"]],f:["Live & recorded classes","Quizzes & doubt-clearing","Subscription & cohort plans","Educator discovery","Progress analytics"]},
+9:{p:[["Car owner","Wants trustworthy, fixed-price service"],["Independent garage","Gets branded order flow"],["Fleet manager","Schedules bulk servicing"]],f:["Transparent fixed pricing","Doorstep pickup & drop","Live job tracking","Genuine-parts assurance","Service history records"]},
+10:{p:[["Everyday consumer","Pays bills and sends money"],["Small merchant","Accepts QR/UPI payments"],["Lender/insurer partner","Reaches users via the wallet"]],f:["Wallet & UPI/QR transfers","Bill pay & recharges","Merchant checkout & settlement","Cross-sell credit/insurance","Transaction history & rewards"]},
+11:{p:[["Policy buyer","Compares quotes before buying"],["Insurer","Gets digital distribution"],["Claims-stage customer","Needs claims support"]],f:["Side-by-side quote compare","Eligibility & needs analysis","Digital onboarding & KYC","Claims assistance","Commission-based monetisation"]},
+12:{p:[["Spectacle wearer","Wants try-before-buy convenience"],["Optometrist","Provides home eye tests"],["Fashion-led buyer","Shops sunglasses & frames"]],f:["Virtual / AR try-on","At-home eye test booking","Prescription management","Lens customisation","Omnichannel store pickup"]},
+13:{p:[["Beauty enthusiast","Discovers products via content"],["Indie/global brand","Reaches new buyers"],["Beauty advisor","Recommends & reviews"]],f:["Content-to-commerce feeds","Authenticity assurance","Reviews & ratings","Personalised recommendations","Private-label range"]},
+14:{p:[["Upgrader","Sells an old phone for instant cash"],["Bargain buyer","Buys certified refurbished"],["Refurb partner","Sources resale stock"]],f:["Diagnostic-based valuation","Doorstep pickup","Certified data-wipe","Instant payment","Refurb resale marketplace"]},
+15:{p:[["E-commerce seller","Needs nationwide fulfilment"],["SME shipper","Sends parcels reliably"],["Operations manager","Tracks shipments & returns"]],f:["Shipment booking","Real-time tracking","COD reconciliation","Returns management","Wide pin-code reach"]},
+16:{p:[["Marriage seeker","Finds a verified partner"],["Parent / family","Vets matches by community"],["Concierge user","Wants premium matchmaking"]],f:["Verified profiles","AI match suggestions","Privacy controls","Premium concierge tiers","Community & preference filters"]},
+17:{p:[["Local seller","Lists used items quickly"],["Bargain hunter","Finds nearby deals"],["Casual flipper","Trades second-hand goods"]],f:["Free local listings","In-app chat","Location-based matching","Optional escrow/delivery","Featured-listing monetisation"]},
+18:{p:[["Hungry customer","Orders food on demand"],["Restaurant owner","Expands beyond walk-ins"],["Delivery rider","Earns per order"]],f:["Menu & order management","Live order tracking","Rider routing","Ratings & reviews","Cloud-kitchen support"]},
+19:{p:[["Home buyer/renter","Searches verified listings"],["Broker/agent","Generates qualified leads"],["Developer","Markets new projects"]],f:["Verified listings","Virtual tours","Locality insights","Lead generation","Buyer-seller messaging"]},
+20:{p:[["Traveller","Books a whole trip in one place"],["Travel supplier","Distributes inventory"],["Holiday planner","Bundles packages"]],f:["Multi-mode booking (air/rail/bus)","Hotel & package bundling","Dynamic pricing","Trip management","Cross-sell insurance/cabs"]},
+21:{p:[["Car owner who can't drive","Needs a driver, not a cab"],["Trained driver","Earns flexible gigs"],["Outstation traveller","Books a driver for a trip"]],f:["Hourly/outstation/valet booking","Driver vetting & training","GPS tracking","Ratings & safety","Transparent pricing"]},
+22:{p:[["Kirana / retailer","Orders stock with credit"],["Manufacturer/wholesaler","Reaches more buyers"],["Distribution lead","Manages bulk supply"]],f:["Bulk B2B ordering","Embedded working-capital credit","Logistics & delivery","Catalogue discovery","Repeat-order automation"]},
+23:{p:[["Online shopper","Buys across categories"],["Third-party seller","Reaches national demand"],["Fulfilment partner","Handles storage & delivery"]],f:["Catalogue & search","Payments & checkout","Fulfilment & logistics","Returns & seller services","Recommendations"]},
+24:{p:[["Bill payer","Automates recurring bills"],["Utility/biller","Collects digitally"],["Reward seeker","Earns cashback"]],f:["UPI transfers","Recharges & autopay","Cashback & rewards","Merchant payments","Lending tie-ins"]},
+25:{p:[["Apartment resident","Manages visitors & dues"],["Society manager","Runs operations digitally"],["Security guard","Verifies entries"]],f:["OTP visitor passes","Maintenance billing","Amenity booking","Resident communication","Resident marketplace"]},
+26:{p:[["Pet parent","Buys supplies & books vet"],["Veterinarian","Offers consults & records"],["Groomer","Takes home bookings"]],f:["Recurring food subscriptions","Vet tele-consults","Home grooming booking","Pet health records","Supplies marketplace"]},
+27:{p:[["Fitness seeker","Wants one pass for many gyms"],["Gym/studio","Fills empty classes"],["Remote exerciser","Streams home workouts"]],f:["Single multi-gym membership","Live & on-demand classes","Class booking","Nutrition bundling","Wellness tracking"]},
+28:{p:[["Busy homeowner","Books vetted home pros"],["Gig professional","Gets recurring branded work"],["Property manager","Schedules repairs"]],f:["Vetted pro profiles","Fixed-price booking","Scheduling & payment","Service warranty","Ratings & training"]},
+29:{p:[["Urban professional","Outsources laundry weekly"],["Local launderer","Gets digital orders"],["Hostel/PG manager","Bulk laundry needs"]],f:["Pickup & delivery scheduling","Subscription plans","Order tracking","Garment-level handling","Launderer aggregation"]},
+30:{p:[["School student","Follows adaptive lessons"],["Parent","Monitors progress"],["Teacher/tutor","Delivers structured content"]],f:["Curriculum-mapped courses","Adaptive practice","Assessments & analytics","Parent dashboards","Gamified learning"]},
+31:{p:[["Event-goer","Books movie/concert seats"],["Venue/organiser","Sells tickets & seats"],["Promoter","Drives event discovery"]],f:["Dynamic seat maps","Digital ticketing","Event discovery","Payments","F&B & merch upsell"]},
+32:{p:[["Renovating homeowner","Wants one accountable project"],["Designer","Delivers managed projects"],["Modular supplier","Fulfils factory-made units"]],f:["Design visualisation","Transparent quotes","Modular manufacturing","Managed execution","Warranty"]},
+33:{p:[["Occasional driver","Rents a car by the hour"],["Vehicle owner","Earns from idle car"],["Weekend traveller","Self-drive getaway"]],f:["Hourly-to-weekly rentals","KYC & digital unlock","Insurance & damage cover","P2P vehicle sharing","Booking management"]},
+34:{p:[["Adult child abroad","Arranges care for parents"],["Senior","Receives at-home care"],["Caregiver/nurse","Gets matched assignments"]],f:["Caregiver vetting & matching","Visit scheduling","Remote care monitoring","Physio & nursing services","Medical-equipment supply"]},
+35:{p:[["Couple / event host","Hires a photographer"],["Photographer","Showcases a portfolio"],["Studio","Manages bookings"]],f:["Portfolio discovery","Quote & contract management","Booking & payments","Style/budget curation","Reviews"]},
+36:{p:[["D2C seller","Compares couriers per order"],["SME ops lead","Manages fulfilment"],["Returns handler","Processes NDR/returns"]],f:["Multi-courier rate compare","Label automation","Tracking","NDR & returns","Best-rate-per-pincode"]},
+37:{p:[["Salaried saver","Tracks spending & budgets"],["Young earner","Builds money habits"],["Lender partner","Cross-sells credit"]],f:["Auto expense categorisation","Budgets & insights","Bill reminders","Spend visualisation","Credit/invest cross-sell"]},
+38:{p:[["Single dater","Meets people nearby"],["Safety-conscious user","Wants verified matches"],["Premium user","Boosts visibility"]],f:["Swipe-style discovery","Profile verification","Matching algorithm","Safety features","Premium boosts"]},
+39:{p:[["Tenant","Rents without brokerage"],["Owner/landlord","Lists directly"],["Relocating family","Needs move-in services"]],f:["Direct owner-tenant chat","Verified listings","Rental agreements","Packers & painting add-ons","Home-loan tie-ins"]},
+40:{p:[["Small-business founder","Incorporates & files online"],["Individual","Needs simple legal docs"],["Lawyer","Picks up matched work"]],f:["Templatised legal docs","Incorporation & trademarks","Lawyer matching","Filings & compliance","Consultations"]},
+41:{p:[["Shift business","Staffs up on demand"],["Gig worker","Picks flexible shifts"],["Ops manager","Schedules just-in-time labour"]],f:["Skill matching","Shift scheduling","Worker profiles & ratings","Payments","Compliance handling"]},
+42:{p:[["Jobseeker","Applies to openings"],["Recruiter","Searches candidate pool"],["Employer","Builds employer brand"]],f:["Job search & alerts","Resume database","Applicant tracking","Recruiter subscriptions","Featured postings"]},
+43:{p:[["Interest enthusiast","Joins local groups"],["Community organiser","Runs recurring events"],["Local sponsor","Reaches niche audiences"]],f:["Group creation","Event scheduling","Ticketing","Membership growth","Organiser subscriptions"]},
+44:{p:[["Diner","Reserves a table with deals"],["Restaurant","Fills empty covers"],["Foodie","Discovers new places"]],f:["Real-time table inventory","Reservations & waitlists","Prepaid offers","Loyalty","Discovery"]},
+45:{p:[["Quality-conscious buyer","Wants safe fresh meat"],["Cold-chain ops","Maintains freshness"],["Repeat household","Subscribes to deliveries"]],f:["Owned cold-chain delivery","Quality assurance","Subscription boxes","Sourcing control","Hygiene/brand trust"]},
+46:{p:[["Local consumer","Finds nearby services"],["Small business","Pays to be discovered"],["Reviewer","Rates businesses"]],f:["Local listings & search","Reviews","Contact & booking","Paid listings & leads","Ads"]},
+47:{p:[["Traveller","Reads reviews before booking"],["Hotel/restaurant","Gets visibility"],["Booking partner","Earns referrals"]],f:["Crowd reviews & photos","Rankings","Booking links","Referral commissions","Q&A"]},
+48:{p:[["Jobseeker","Researches employers"],["Current employee","Shares anonymous reviews"],["Employer","Manages brand & hiring"]],f:["Anonymous reviews","Salary transparency","Interview ratings","Job listings","Employer branding tools"]},
+49:{p:[["Budget traveller","Books a trusted stay"],["Small hotel","Gets branded demand"],["Operator","Standardises quality"]],f:["Standardised quality","Branded distribution","Dynamic pricing","Booking management","Hotel onboarding"]},
+50:{p:[["Niche reader","Follows themed content"],["Creator/publisher","Builds an audience"],["Sponsor","Reaches engaged readers"]],f:["Content curation & hosting","Distribution","Membership","Ads & sponsorship","Events"]},
+51:{p:[["Self-learner","Studies a language daily"],["Casual user","Builds streaks"],["Premium learner","Wants ad-free depth"]],f:["Bite-sized adaptive lessons","Streaks & gamification","Spaced repetition","Freemium-to-premium","Progress tracking"]},
+52:{p:[["Household","Schedules waste pickup"],["Municipality","Tracks collection"],["Recycler","Sources sorted waste"]],f:["Scheduled collection","Bin tracking","Segregation rewards","Recycler/scrap matching","Sanitation accountability"]},
+53:{p:[["Streaming subscriber","Watches on any device"],["Content studio","Distributes originals"],["Binge viewer","Wants recommendations"]],f:["VOD streaming","Original content","Personalised recommendations","Multi-device","Subscription billing"]},
+54:{p:[["Business analyst","Builds dashboards"],["Decision-maker","Reads embedded reports"],["Data team","Governs data"]],f:["Data-source connectors","Interactive dashboards","Self-serve analytics","Embedded reporting","Governance"]},
+55:{p:[["Cable subscriber","Pays bills digitally"],["Local cable/ISP operator","Collects subscriptions"],["Collections agent","Tracks dues"]],f:["Subscriber records","Recurring billing","Payment collection","Reminders","Operator dashboard"]},
+56:{p:[["Young fashion buyer","Shops trend-led styles"],["Apparel brand","Runs fast cycles"],["Social shopper","Discovers via social"]],f:["Trend-led catalogue","In-house design/manufacturing","Sizing help","Fast fulfilment","Brand-led marketing"]},
+57:{p:[["Jewellery buyer","Wants certified pieces"],["Gifter","Buys for occasions"],["Designer brand","Sells customisation"]],f:["Certification","Try-at-home","Customisation","Secure delivery","Lifetime exchange/buy-back"]},
+58:{p:[["New parent","Shops by child's stage"],["Expecting mother","Stocks essentials"],["Gifter","Buys baby gifts"]],f:["Wide baby/kids range","Parenting content","Loyalty","Stage-based recommendations","Omnichannel stores"]},
+59:{p:[["Bargain hunter","Finds codes at checkout"],["Cashback seeker","Tracks payouts"],["Affiliate merchant","Drives sales"]],f:["Coupon aggregation","Verified offers","Cashback tracking","Affiliate links","Deal alerts"]},
+60:{p:[["Gift buyer","Personalises for occasions"],["Print-on-demand maker","Fulfils custom orders"],["Occasion planner","Sets reminders"]],f:["Design/personalisation tools","Print-on-demand","Occasion reminders","Premium custom range","Delivery"]},
+61:{p:[["On-the-go listener","Streams audio shows"],["Regional creator","Publishes in local languages"],["Premium subscriber","Wants exclusives"]],f:["Podcasts & audiobooks","Regional-language originals","Personalised discovery","Subscriptions","Ad monetisation"]},
+62:{p:[["Underbanked borrower","Needs instant credit"],["Salaried user","Takes a short-term loan"],["Risk team","Underwrites & collects"]],f:["App-based KYC","Alternative-data scoring","Instant disbursal","Flexible credit lines","Automated collections"]},
+63:{p:[["Engaged couple","Plans the whole wedding"],["Wedding vendor","Gets qualified leads"],["Planner","Coordinates budgets/guests"]],f:["Vendor aggregation","Budget & guest tools","Registries","Reviews","Vendor lead-gen"]},
+64:{p:[["Freelancer/startup","Books flexible desks"],["Space operator","Maximises utilisation"],["Community manager","Runs member events"]],f:["Space inventory & booking","Access control","Billing","Community features","Utilisation analytics"]},
+65:{p:[["Creator","Raises funds from backers"],["Backer","Pledges for rewards"],["Campaign manager","Runs reward tiers"]],f:["Campaign hosting","Pledge processing","Reward tiers","All-or-nothing funding","Platform fee"]},
+66:{p:[["Local consumer","Searches & books services"],["Local business","Buys leads"],["Service provider","Lists offerings"]],f:["Broad local search","Bookings across verticals","Qualified leads","Paid listings","Deals"]},
+67:{p:[["Used-car buyer","Wants inspected, fair-priced cars"],["Seller","Gets instant payment"],["Financing partner","Offers loans"]],f:["Multi-point inspection","Transparent valuation","Instant payment","Financing & warranty","Certified resale"]},
+68:{p:[["Commuter","Shares a ride to cut cost"],["Driver","Fills empty seats"],["Employer","Encourages green commute"]],f:["Route matching","Cost-splitting","Payments","Ratings","Recurring commute pools"]},
+69:{p:[["Brand/merchant","Runs a loyalty programme"],["Marketing lead","Targets offers"],["Shopper","Redeems points"]],f:["Points/tiers engine","Cross-channel loyalty","Personalised offers","Customer data & analytics","Redemption management"]},
+70:{p:[["Avid reader","Finds the next book"],["Author/publisher","Promotes titles"],["Deal-seeker","Grabs discounted e-books"]],f:["Personalised recommendations","Deal alerts","Affiliate sales","Reviews & lists","Genre discovery"]},
+71:{p:[["SME / individual","Moves goods on demand"],["Truck/2-wheeler owner","Earns from hauls"],["Logistics coordinator","Tracks loads"]],f:["Load-to-vehicle matching","Transparent pricing","Live tracking","Local & intercity hauls","Instant booking"]},
+72:{p:[["Home cook","Finds recipes & plans meals"],["Grocery partner","Converts recipes to baskets"],["Diet-conscious user","Filters by preference"]],f:["Recipe discovery","Personalised suggestions","Smart shopping lists","Dietary filters","Grocery purchase links"]},
+73:{p:[["Hobby learner","Takes craft classes"],["Maker/instructor","Teaches & sells kits"],["Supplies buyer","Gets materials"]],f:["Video courses","Patterns & kits","Supplies commerce","Maker community","Learn-then-buy flow"]},
+74:{p:[["News reader","Gets a personalised feed"],["Publisher","Distributes content"],["Advertiser","Targets audiences"]],f:["Multi-publisher aggregation","Language personalisation","Smart feed","Ad monetisation","Content licensing"]},
+75:{p:[["Retail trader","Buys & sells crypto"],["Pro trader","Uses advanced products"],["New user","Wants a fiat on-ramp"]],f:["Order matching","Wallets & custody","Fiat on-ramps","Security & compliance","Trading products"]},
+76:{p:[["Client","Books a nearby slot"],["Salon/barber","Fills empty chairs"],["Stylist","Manages a calendar"]],f:["Real-time availability","Online booking","Service listings","Calendar management","Discovery"]},
+77:{p:[["Creative individual","Joins ideation sessions"],["Corporate team","Books a facilitated workshop"],["Facilitator","Runs sessions"]],f:["Facilitated virtual sessions","Collaboration tools","Ideation exercises","Cohort/session fees","Corporate packages"]},
+78:{p:[["Business/client","Hires freelancers"],["Freelancer","Wins remote projects"],["Project manager","Tracks milestones"]],f:["Profiles & proposals","Escrow payments","Milestones","Ratings & reviews","Global talent access"]},
+79:{p:[["Brand/marketer","Optimises ad spend"],["SME","Outsources digital marketing"],["Analyst","Reads performance data"]],f:["Campaign management","Ad-tech tooling","AI optimisation","Analytics","Consulting"]},
+80:{p:[["Voter","Receives agenda & gives feedback"],["Party / campaign","Mobilises volunteers"],["Ground volunteer","Coordinates work"]],f:["Content distribution","Surveys & feedback","Volunteer coordination","Sentiment tracking","Two-way comms"]},
+81:{p:[["Online seller","Ships via many couriers"],["Ops lead","Tracks & manages returns"],["D2C brand","Scales fulfilment cheaply"]],f:["Carrier selection","Label printing","Tracking","NDR & returns","Best-rate routing"]},
+82:{p:[["Musician","Buys gear with advice"],["Studio","Sources pro audio"],["Beginner","Wants guidance & EMI"]],f:["Wide instrument catalogue","Expert gear advice","EMI/financing","Musician community","Authenticity"]},
+83:{p:[["Belief-driven user","Seeks horoscopes & remedies"],["Astrologer","Offers paid consults"],["Gift/remedy buyer","Buys gems/products"]],f:["Personalised charts/kundli","Astrologer consults","Match-making","Remedial product sales","Horoscope content"]},
+84:{p:[["Devotee abroad","Can't visit temples in person"],["Temple","Reaches distant followers"],["Family","Orders rituals on behalf"]],f:["Prasad delivery","Rituals-on-behalf","Temple tie-ups","Packaging & dispatch","Authenticity assurance"]},
+85:{p:[["Congregation member","Engages with the community"],["Faith leader","Coordinates services"],["Donor","Gives online"]],f:["Service schedules","Online giving","Livestreamed sermons","Events","Member communication"]},
+86:{p:[["Club member","Books facilities & dining"],["Club admin","Runs operations"],["Event organiser","Schedules club events"]],f:["Member records","Facility booking","Dues billing","Events & dining","Communication"]},
+87:{p:[["Digital artist","Mints & sells NFTs"],["Collector","Buys & trades digital art"],["Curator","Verifies provenance"]],f:["Minting","Wallet integration","Auctions","On-chain royalties","Provenance"]},
+88:{p:[["Operations engineer","Monitors devices"],["Enterprise","Manages IoT fleet"],["Field technician","Acts on alerts"]],f:["Device data ingestion","Telemetry visualisation","Alerts & automation","Heterogeneous-device control","Unified dashboard"]},
+89:{p:[["SME owner","Outsources back-office"],["Accountant","Delivers via the network"],["Founder","Raises funds & stays compliant"]],f:["Accounting & bookkeeping","Tax filing","Legal & compliance","Advisory","Fundraising support"]},
+90:{p:[["Patient","Compares & books tests"],["Diagnostic lab","Gets bookings"],["Doctor","Refers & reads reports"]],f:["Test & price compare","Home sample collection","Digital reports","Lab aggregation","Doctor referrals"]},
+91:{p:[["Individual","Needs everyday legal help"],["SME","Handles disputes & docs"],["Advocate","Picks up matched cases"]],f:["Lawyer matching by specialty","Consultations","Documentation","Case tracking","Affordable plans"]},
+92:{p:[["Manufacturer/exporter","Finds buyers"],["Distributor","Sources suppliers"],["Trade lead","Promotes products"]],f:["Company catalogues","Trade lead-gen","Seller verification","Inquiry management","B2B discovery"]},
+93:{p:[["Migrant worker","Sends money home"],["Recipient family","Receives fast payouts"],["Compliance team","Manages FX & KYC"]],f:["Cross-border transfers","Multiple payout methods","FX handling","Compliance & KYC","Low fees & speed"]},
+94:{p:[["Small merchant","Turns a device into a POS"],["Retailer","Tracks inventory & sales"],["Lender partner","Offers merchant credit"]],f:["Payment acceptance","Inventory management","Sales analytics","Hardware-light setup","Add-on financial services"]},
+95:{p:[["Adult buyer","Orders liquor for delivery"],["Licensed retailer","Sells online compliantly"],["Compliance officer","Verifies age & limits"]],f:["Age verification","Licensed-retailer aggregation","Compliant delivery","Catalogue","Regulatory controls"]},
+96:{p:[["Sports/music fan","Buys primary or resale tickets"],["Venue/team","Sells inventory"],["Reseller","Lists tickets safely"]],f:["Primary & resale tickets","Validity guarantee","Seat selection","Broad event coverage","Secure payments"]},
+97:{p:[["Conscious consumer","Buys traceable fresh produce"],["Farmer","Gets fair pay & demand"],["Subscriber","Receives veg/fruit boxes"]],f:["Short farm-to-home chain","Traceability","Subscription boxes","Fair farmer pay","Freshness assurance"]},
+98:{p:[["Local resident","Exchanges goods & services"],["Job/housing seeker","Finds local listings"],["Casual seller","Posts free ads"]],f:["Free local listings","Broad categories","Buyer-seller connect","Jobs & housing","Local liquidity"]},
+99:{p:[["PC enthusiast","Builds a custom rig"],["IT buyer","Sources business hardware"],["Reviewer","Reads specs & guides"]],f:["Deep hardware catalogue","Build guides","Reviews","Competitive pricing","Tech community"]},
+100:{p:[["Mobile user","Recharges & pays bills"],["Wallet user","Pays merchants"],["Lender partner","Cross-sells credit"]],f:["Prepaid recharges","Bill autopay","Wallet payments","Credit/insurance cross-sell","Rewards"]},
+101:{p:[["Local shopper","Carries all rewards in one app"],["Small merchant","Launches a loyalty programme fast"],["Marketer","Pushes targeted offers"]],f:["Digital stamp/points wallet","One-tap check-ins","Auto point issuance","Targeted offers & push","Merchant self-serve setup"]},
+102:{p:[["Independent coach/trainer","Runs the whole practice in one app"],["Studio owner","Manages staff, classes & members"],["Client","Books sessions and buys passes"]],f:["Recurring memberships & packages","Calendar-based session booking","Event ticketing (workshops/bootcamps)","Promotions, codes & referrals","Payments, reminders & client CRM"]}
+};
+
+const FAMNAME={C:"Digital Commerce",S:"Digital Services",E:"Digital Engagement"};
+const FAMORDER=["C","S","E"];
 const AFME = new Set(["Africa","Middle East"]);
 const REGIONS = ["India","USA","Africa","Middle East","Europe","China","UK","Global"];
 
@@ -569,6 +746,12 @@ const navList = document.getElementById('navList');
 const navSearch = document.getElementById('navSearch');
 const navCount = document.getElementById('navCount');
 const regionBar = document.getElementById('regionBar');
+const detail = document.getElementById('detail');
+const detailInner = document.getElementById('detailInner');
+const detailClose = document.getElementById('detailClose');
+let pinnedId = null;
+const famBar=document.getElementById('famBar');
+let activeFam=null;
 let activeRegion = null;
 
 REGIONS.forEach(r=>{
@@ -582,54 +765,124 @@ REGIONS.forEach(r=>{
   regionBar.appendChild(c);
 });
 
+
+FAMORDER.forEach(fk=>{
+  const c=document.createElement('div');
+  c.className='fchip';c.dataset.f=fk;
+  c.innerHTML=`<span class="fam-dot ${fk}"></span>${FAMNAME[fk]}`;
+  c.onclick=()=>{
+    if(activeFam===fk){activeFam=null;c.classList.remove('active')}
+    else{activeFam=fk;document.querySelectorAll('.fam-bar .fchip').forEach(x=>x.classList.remove('active'));c.classList.add('active')}
+    render();
+  };
+  famBar.appendChild(c);
+});
+
 function navMatch(d,q){
   if(!q) return true;
   const hay=(d.cat+' '+d.purpose+' '+d.brief+' '+d.use+' '+d.ex.map(e=>e[0]).join(' ')).toLowerCase();
   return q.toLowerCase().split(/\s+/).every(t=>hay.includes(t));
 }
+function famMatch(d){ return !activeFam || d.fam===activeFam; }
 function regionMatch(d){
   if(!activeRegion) return true;
   return d.ex.some(e=>e[1]===activeRegion);
 }
 
+
+function detailMarkup(d){
+  const m = META[d.i] || {p:[],f:[]};
+  const personas = m.p.map(p=>`
+    <div class="persona">
+      <div class="pin-dot">${p[0].charAt(0)}</div>
+      <div><div class="pna">${p[0]}</div><div class="pro">${p[1]}</div></div>
+    </div>`).join('');
+  const feats = m.f.map(f=>`
+    <div class="feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg><span>${f}</span></div>`).join('');
+  return `
+    <button class="detail-close" id="detailClose2">×</button>
+    <div class="d-pinrow"><div class="d-eyebrow">№${String(d.i).padStart(2,'0')} · ${d.purpose}</div><span class="d-pin ${pinnedId===d.i?'show':''}" id="dPin">📌 Pinned</span></div>
+    <div class="d-title">${d.cat}</div>
+    <span class="fam-tag fam-${d.fam}">${FAMNAME[d.fam]}</span>
+    <div class="d-section">
+      <h4>Who it's for — Personas</h4>
+      ${personas}
+    </div>
+    <div class="d-section">
+      <h4>Key Features & Functionality</h4>
+      ${feats}
+    </div>
+    <a class="d-ref" href="${d.url}" target="_blank" rel="noopener">Reference example ↗</a>
+  `;
+}
+function showDetail(d, pin){
+  if(pin){
+    pinnedId = (pinnedId===d.i) ? null : d.i;
+  }
+  const target = pinnedId ? DATA.find(x=>x.i===pinnedId) : d;
+  detailInner.innerHTML = detailMarkup(target);
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('selected', c.id==='card-'+target.i));
+  detail.classList.add('open');
+  const c2=document.getElementById('detailClose2');
+  if(c2) c2.onclick=closeDetail;
+}
+function closeDetail(){ detail.classList.remove('open'); }
+
 function render(){
   const q=navSearch.value.trim();
-  const list=DATA.filter(d=>navMatch(d,q)&&regionMatch(d));
+  const list=DATA.filter(d=>navMatch(d,q)&&regionMatch(d)&&famMatch(d));
 
   navList.innerHTML='';
   navCount.textContent=`${list.length} of ${DATA.length} use cases`;
-  list.forEach(d=>{
-    const b=document.createElement('button');
-    b.className='nav-item';b.dataset.target='card-'+d.i;
-    b.innerHTML=`<span class="ni-num">${String(d.i).padStart(2,'0')}</span><span class="ni-txt">${d.cat}</span>`;
-    b.onclick=()=>{
-      document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      const card=document.getElementById('card-'+d.i);
-      card.scrollIntoView({behavior:'smooth',block:'start'});
-      card.classList.add('flash');
-      setTimeout(()=>card.classList.remove('flash'),1200);
-      document.getElementById('nav').classList.remove('open');
-      document.getElementById('overlay').classList.remove('show');
-    };
-    navList.appendChild(b);
+  FAMORDER.forEach(fk=>{
+    const grp=list.filter(d=>d.fam===fk);
+    if(!grp.length) return;
+    const h=document.createElement('div');
+    h.className='nav-group';
+    h.innerHTML=`<span class="fam-dot ${fk}"></span>${FAMNAME[fk]} · ${grp.length}`;
+    navList.appendChild(h);
+    grp.forEach(d=>{
+      const b=document.createElement('button');
+      b.className='nav-item';b.dataset.target='card-'+d.i;
+      b.innerHTML=`<span class="ni-num">${String(d.i).padStart(2,'0')}</span><span class="ni-txt">${d.cat}</span>`;
+      b.onclick=()=>{
+        document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const card=document.getElementById('card-'+d.i);
+        card.scrollIntoView({behavior:'smooth',block:'start'});
+        card.classList.add('flash');
+        setTimeout(()=>card.classList.remove('flash'),1200);
+        document.getElementById('nav').classList.remove('open');
+        document.getElementById('overlay').classList.remove('show');
+      };
+      navList.appendChild(b);
+    });
   });
 
   rows.innerHTML='';
   if(list.length===0){
-    rows.innerHTML=`<div class="no-results"><h3>No use cases found</h3><p>Try a different keyword or clear the region filter.</p></div>`;
+    rows.innerHTML=`<div class="no-results"><h3>No use cases found</h3><p>Try a different keyword or clear the filters.</p></div>`;
     return;
   }
-  list.forEach((d,n)=>{
+  let n=0;
+  FAMORDER.forEach(fk=>{
+    const grp=list.filter(d=>d.fam===fk);
+    if(!grp.length) return;
+    const gh=document.createElement('div');
+    gh.className='group-head';
+    gh.innerHTML=`<span class="fam-dot ${fk}"></span><h2>${FAMNAME[fk]}</h2><span class="gcount">${grp.length} apps</span><span class="gline"></span>`;
+    rows.appendChild(gh);
+    grp.forEach(d=>{
     const card=document.createElement('div');
     card.className='card';card.id='card-'+d.i;
-    card.style.animation=`fade .4s ease ${Math.min(n*0.02,0.3)}s both`;
+    card.style.animation=`fade .4s ease ${Math.min((n++)*0.02,0.3)}s both`;
     card.innerHTML=`
       <div class="row-head">
         <div class="idx-badge">№${String(d.i).padStart(2,'0')}</div>
         <div class="row-titles">
           <div class="cat">${d.cat}</div>
           <div class="purpose">${d.purpose}</div>
+          <span class="fam-tag fam-${d.fam}">${FAMNAME[d.fam]}</span>
         </div>
         ${d.cover!=null?`<div class="cover">${d.cover}<span>covers</span></div>`:''}
       </div>
@@ -650,7 +903,10 @@ function render(){
           <div class="row-foot"><a class="ref-link" href="${d.url}" target="_blank" rel="noopener">Reference ↗</a></div>
         </div>
       </div>`;
+    card.addEventListener('mouseenter',()=>{ if(pinnedId===null) showDetail(d,false); });
+    card.addEventListener('click',()=> showDetail(d,true));
     rows.appendChild(card);
+    });
   });
 }
 
@@ -658,6 +914,7 @@ const menuBtn=document.getElementById('menuBtn');
 const overlay=document.getElementById('overlay');
 menuBtn.onclick=()=>{document.getElementById('nav').classList.add('open');overlay.classList.add('show')};
 overlay.onclick=()=>{document.getElementById('nav').classList.remove('open');overlay.classList.remove('show')};
+detailClose.onclick=closeDetail;
 
 const style=document.createElement('style');
 style.textContent='@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}';
